@@ -1,3 +1,4 @@
+using System;
 using Runtime.Enums;
 using UnityEngine;
 
@@ -5,32 +6,47 @@ namespace Runtime.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        #region Self Variables
-
          public GameStates GameStates { get; private set;}
+         
+        #region Shortcuts
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                SetGameStateLevelFail();
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                SetGameStateLevelComplete();
+            }
+              
+        }
 
         #endregion
         
         public void SetGameStateGameplay()
         {
             GameStates = GameStates.Gameplay;
-            //Get Input
+            
+            //InputSignals.Instance.onEnableInput();
         }
         public void SetGameStateSettingsScreen()
         {
             GameStates = GameStates.SettingsScreen;
+            //InputSignals.Instance.onDisableInput();
         }
         
         public void SetGameStateLevelComplete()
         {
             GameStates = GameStates.LevelComplete;
-            //OnLevelCompleted
+            //CoreGameSignals.Instance.onLevelSuccessful();
         }
         
         public void SetGameStateLevelFail()
         {
             GameStates = GameStates.LevelFail;
-            // OnLevelFailed
+            //CoreGameSignals.Instance.onLevelFailed();
         }
        
     }
