@@ -6,7 +6,8 @@ namespace Runtime.Managers
 {
     public class LevelManager : MonoBehaviour
     {
-        public int CurrentLevelIndex;
+        public int CurrentLevelIndex = 1; 
+        
         
         private void Start()
         {
@@ -23,7 +24,7 @@ namespace Runtime.Managers
 
         private void OnLevelSuccessful()
         {
-            CurrentLevelIndex++;
+            PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelIndexInt, CurrentLevelIndex++);
             SceneManager.LoadScene("Level" + CurrentLevelIndex);
         }
 

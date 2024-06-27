@@ -1,5 +1,5 @@
-using System;
 using Runtime.Enums;
+using Runtime.Signals;
 using UnityEngine;
 
 namespace Runtime.Managers
@@ -9,7 +9,6 @@ namespace Runtime.Managers
          public GameStates GameStates { get; private set;}
          
         #region Shortcuts
-
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.F))
@@ -22,32 +21,30 @@ namespace Runtime.Managers
             }
               
         }
-
         #endregion
         
         public void SetGameStateGameplay()
         {
             GameStates = GameStates.Gameplay;
-            
-            //InputSignals.Instance.onEnableInput();
+            InputSignals.Instance.onEnableInput?.Invoke();
         }
         public void SetGameStateSettingsScreen()
         {
             GameStates = GameStates.SettingsScreen;
-            //InputSignals.Instance.onDisableInput();
+            InputSignals.Instance.onDisableInput?.Invoke();
         }
         
         public void SetGameStateLevelComplete()
         {
             GameStates = GameStates.LevelComplete;
-            //CoreGameSignals.Instance.onLevelSuccessful();
+            CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
         }
         
         public void SetGameStateLevelFail()
         {
             GameStates = GameStates.LevelFail;
-            //CoreGameSignals.Instance.onLevelFailed();
+            CoreGameSignals.Instance.onLevelFailed?.Invoke();
         }
-       
+        
     }
 }
