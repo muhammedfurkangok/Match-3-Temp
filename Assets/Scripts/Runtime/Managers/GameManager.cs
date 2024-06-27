@@ -31,6 +31,7 @@ namespace Runtime.Managers
         public void SetGameStateSettingsScreen()
         {
             GameStates = GameStates.SettingsScreen;
+            UISignals.Instance.onSettingsButtonClicked?.Invoke();   
             InputSignals.Instance.onDisableInput?.Invoke();
         }
         

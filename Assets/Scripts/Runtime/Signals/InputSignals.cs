@@ -7,7 +7,7 @@ namespace Runtime.Signals
     {
         //tutorial:  public UnityAction onFirstTimeTouchTaken = delegate { };
         public UnityAction onEnableInput = delegate { };
-        public UnityAction onDisableInput = delegate { };
         public UnityAction onInputTaken = delegate { };
+        public UnityAction onDisableInput = delegate { };
     }
 }

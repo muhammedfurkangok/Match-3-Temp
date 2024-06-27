@@ -7,5 +7,6 @@ namespace Runtime.Signals
     {
         public UnityAction<byte> onSetNewLevelValue = delegate { };
         public UnityAction<int> onSetMoneyValue = delegate { };
+        public UnityAction onSettingsButtonClicked = delegate { };
     }
 }

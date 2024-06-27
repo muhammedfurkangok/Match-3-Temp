@@ -8,17 +8,15 @@ namespace Runtime.Managers
     {
         private int CurrentLevelIndex = 1; 
         
-        
         private void Start()
         {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelIndexInt, CurrentLevelIndex);
             CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
             CoreGameSignals.Instance.onRestartLevel += OnRestartLevel;
             //CoreGameSignals.Instance.onLevelInitialize += OnInitializeLevel;
             //CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
         }
-
-       
-
+        
         private void OnRestartLevel()
         {
              SceneManager.LoadScene("Level" + CurrentLevelIndex);
@@ -30,8 +28,7 @@ namespace Runtime.Managers
             PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelIndexInt, CurrentLevelIndex);
             SceneManager.LoadScene("Level" + CurrentLevelIndex);
         }
-      
-
+        
         private void OnDisable()
         {
             CoreGameSignals.Instance.onLevelSuccessful -= OnLevelSuccessful;
