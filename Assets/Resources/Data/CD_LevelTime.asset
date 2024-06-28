@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: CD_LevelTime
   m_EditorClassIdentifier: 
   levelData:
-  - levelName: Level 1
-    timeInSeconds: 90
-  - levelName: Level 2
-    timeInSeconds: 180
-  - levelName: Level 3
-    timeInSeconds: 270
+  - timeInSeconds: 90
+    moveCount: 20
+  - timeInSeconds: 180
+    moveCount: 30
+  - timeInSeconds: 270
+    moveCount: 40
