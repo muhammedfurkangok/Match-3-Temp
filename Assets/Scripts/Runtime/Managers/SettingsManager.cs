@@ -1,10 +1,11 @@
+using Runtime.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Runtime.Managers
 {
-    public class SettingsManager : MonoBehaviour
+    public class SettingsManager : SingletonMonoBehaviour<SettingsManager>
     {
         public bool isSoundActive = true;
         public bool isVibrationActive = true;

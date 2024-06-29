@@ -10,13 +10,11 @@ namespace Runtime.Managers
     {
         [SerializeField] private TextMeshProUGUI moverText;
         private int _moveCount;
-
-
+        
         private void Start()
         {
             _moveCount = Resources.Load<CD_LevelTime>("Data/CD_LevelTime").levelData[PlayerPrefs.GetInt(PlayerPrefsKeys.LevelValueInt)].moveCount;
             moverText.text = _moveCount.ToString();
-            InputSignals.Instance.onInputTaken += OnInputTaken;
         }
         
         public void OnInputTaken()
@@ -33,10 +31,6 @@ namespace Runtime.Managers
         {
             CoreGameSignals.Instance.onLevelFailed?.Invoke();
         }
-
-        private void OnDisable()
-        {
-            InputSignals.Instance.onInputTaken -= OnInputTaken;
-        }
+        
     }
 }

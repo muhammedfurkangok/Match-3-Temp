@@ -1,24 +1,28 @@
+using Cysharp.Threading.Tasks;
 using Runtime.Data.UnityObject;
+using Runtime.Enums;
+using Runtime.Extensions;
 using Runtime.Signals;
 using TMPro;
 using UnityEngine;
 
 namespace Runtime.Managers
 {
-    public class TimerManager : MonoBehaviour
+    public class TimerManager : SingletonMonoBehaviour<TimerManager>
     {
         [SerializeField] private TextMeshProUGUI timerText;
         private int startTimeInSeconds;
-
         private int _time;
-        private bool _isTimerRunning;
-
+        
+        private void Awake()
+        {
+            startTimeInSeconds = Resources.Load<CD_LevelTime>("Data/CD_LevelTime").levelData[PlayerPrefs.GetInt(PlayerPrefsKeys.LevelValueInt)].timeInSeconds;
+            _time = startTimeInSeconds;
+        }
         private void Start()
         {
-            _time = Resources.Load<CD_LevelTime>("Data/CD_LevelTime").levelData[PlayerPrefs.GetInt(PlayerPrefsKeys.LevelValueInt)].timeInSeconds;
-            _isTimerRunning = true;
             UpdateTimerText();
-            StartCoroutine(TimerCountdown());
+            PassTimeForCountDown();
         }
 
         private void UpdateTimerText()
@@ -27,20 +31,19 @@ namespace Runtime.Managers
             int seconds = _time % 60;
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
-
-        private System.Collections.IEnumerator TimerCountdown()
+        private async void PassTimeForCountDown()
         {
-            while (_isTimerRunning && _time > 0)
+            while (true)
             {
-                yield return new WaitForSeconds(1);
+                await UniTask.WaitForSeconds(1);
+                if (GameManager.Instance.GameStates != GameStates.Gameplay) await UniTask.WaitUntil(() => GameManager.Instance.GameStates == GameStates.Gameplay);
+
                 _time--;
                 UpdateTimerText();
 
-                if (_time <= 0)
-                {
-                    _isTimerRunning = false;
-                    OnTimerEnd();
-                }
+                if (_time != 0) continue;
+                OnTimerEnd();
+                break;
             }
         }
 

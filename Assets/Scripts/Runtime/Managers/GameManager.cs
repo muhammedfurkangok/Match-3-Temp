@@ -1,10 +1,11 @@
 using Runtime.Enums;
+using Runtime.Extensions;
 using Runtime.Signals;
 using UnityEngine;
 
 namespace Runtime.Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : SingletonMonoBehaviour<GameManager>
     {
          public GameStates GameStates { get; private set;}
          
@@ -26,13 +27,10 @@ namespace Runtime.Managers
         public void SetGameStateGameplay()
         {
             GameStates = GameStates.Gameplay;
-            InputSignals.Instance.onEnableInput?.Invoke();
         }
         public void SetGameStateSettingsScreen()
         {
             GameStates = GameStates.SettingsScreen;
-            UISignals.Instance.onSettingsButtonClicked?.Invoke();   
-            InputSignals.Instance.onDisableInput?.Invoke();
         }
         
         public void SetGameStateLevelComplete()

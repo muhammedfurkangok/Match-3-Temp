@@ -1,5 +1,6 @@
 using System;
 using Runtime.Extensions;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Runtime.Signals
@@ -10,7 +11,6 @@ namespace Runtime.Signals
         public UnityAction onLevelSuccessful = delegate { };
         public UnityAction onLevelFailed = delegate { };
         public UnityAction onRestartLevel = delegate { };
-        public UnityAction onPlay = delegate { };
-     
+        public UnityAction onPlay = delegate { }; 
     }
 }

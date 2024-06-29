@@ -1,26 +1,35 @@
+using Runtime.Extensions;
 using Runtime.Signals;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Runtime.Managers
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : SingletonMonoBehaviour<UIManager>
     {
+        [Header("Panels")]
         [SerializeField] private GameObject startPanel;
         [SerializeField] private GameObject levelCompletePanel;
         [SerializeField] private GameObject settingsPanel;
         [SerializeField] private GameObject levelFailPanel;
         
+        [Header("Buttons")]
+        [SerializeField] private Button settingsButton;
         
+        [Header("Texts")]
         [SerializeField] private TextMeshProUGUI coinText;
         [SerializeField] private TextMeshProUGUI levelText;
         
         private int coinAmount;
         
         private bool isSettingsClicked = false;
+
+      
         private void Start()
         {
+            settingsButton.onClick.AddListener(OnSettingsButtonClicked);
+            levelText.text = $"Level {PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt).ToString()}";
             SubscribeEvents();
             UpdateUI();
         }
@@ -37,7 +46,6 @@ namespace Runtime.Managers
             CoreGameSignals.Instance.onLevelInitialize += OnLevelInitialize;
             CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
             CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
-            UISignals.Instance.onSettingsButtonClicked += OnSettingsButtonClicked;
         }
 
         private void OnLevelInitialize()
@@ -48,15 +56,25 @@ namespace Runtime.Managers
         private void OnSettingsButtonClicked()
         {
             isSettingsClicked = !isSettingsClicked;
-            
-            if(isSettingsClicked) settingsPanel.SetActive(true);
-            else settingsPanel.SetActive(false);
+
+            if (isSettingsClicked)
+            {
+                settingsPanel.SetActive(true);
+                GameManager.Instance.SetGameStateSettingsScreen();
+            }
+            else
+            {
+                settingsPanel.SetActive(false);
+                GameManager.Instance.SetGameStateGameplay();
+            }
+                
         }
 
         private void OnLevelSuccessful()
         {
+            levelCompletePanel.SetActive(true);
             UpdateCoin();
-            levelText.text = PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt).ToString();
+            levelText.text = $"Level {PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt).ToString()}";
             PlayerPrefs.SetInt(PlayerPrefsKeys.CoinsInt, coinAmount);
         }
 
@@ -86,6 +104,7 @@ namespace Runtime.Managers
         {
             CoreGameSignals.Instance.onLevelSuccessful -= OnLevelSuccessful;
             CoreGameSignals.Instance.onLevelFailed -= OnLevelFailed;
+            settingsButton.onClick.RemoveListener(OnSettingsButtonClicked);
         }
     }
 }

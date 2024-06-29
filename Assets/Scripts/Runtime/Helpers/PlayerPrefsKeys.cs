@@ -1,4 +1,3 @@
-
 public class PlayerPrefsKeys
 {
     public static string CurrentLevelIndexInt = "CurrentLevelIndex";

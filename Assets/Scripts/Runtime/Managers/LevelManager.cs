@@ -1,40 +1,20 @@
-using Runtime.Signals;
+using Runtime.Extensions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Runtime.Managers
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelManager : SingletonMonoBehaviour<LevelManager>
     {
-        private int CurrentLevelIndex = 1; 
-        
-        private void Start()
+        public void RestartLevel()
         {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelIndexInt, CurrentLevelIndex);
-            CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
-            CoreGameSignals.Instance.onRestartLevel += OnRestartLevel;
-            //CoreGameSignals.Instance.onLevelInitialize += OnInitializeLevel;
-            //CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
-        }
-        
-        private void OnRestartLevel()
-        {
-             SceneManager.LoadScene("Level" + CurrentLevelIndex);
+             SceneManager.LoadScene("Level" +" " + PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt));
         }
 
-        private void OnLevelSuccessful()
+        public void NextLevel()
         {
-            CurrentLevelIndex++;
-            PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelIndexInt, CurrentLevelIndex);
-            SceneManager.LoadScene("Level" + CurrentLevelIndex);
-        }
-        
-        private void OnDisable()
-        {
-            CoreGameSignals.Instance.onLevelSuccessful -= OnLevelSuccessful;
-            CoreGameSignals.Instance.onRestartLevel -= OnRestartLevel; 
-            //CoreGameSignals.Instance.onLevelFailed -= OnLevelFailed;
-            //CoreGameSignals.Instance.onLevelInitialize -= OnInitializeLevel;
+            PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelIndexInt, PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) + 1);
+            SceneManager.LoadScene("Level" + " "+PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt));
         }
     }
 }
