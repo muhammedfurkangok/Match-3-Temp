@@ -14,13 +14,10 @@ namespace Runtime.Managers
         private int startTimeInSeconds;
         private int _time;
         
-        private void Awake()
+        private void Start()
         {
             startTimeInSeconds = Resources.Load<CD_LevelTime>("Data/CD_LevelTime").levelData[PlayerPrefs.GetInt(PlayerPrefsKeys.LevelValueInt)].timeInSeconds;
             _time = startTimeInSeconds;
-        }
-        private void Start()
-        {
             UpdateTimerText();
             PassTimeForCountDown();
         }

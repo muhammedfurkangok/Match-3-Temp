@@ -8,10 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: 7ecec3f4e8b729d41804a6065f1161d3
-  - enabled: 1
-    path: Assets/Scenes/Level 2.unity
-    guid: 06b0123e7646afd4ca68b9a8eb5bf7e0
-  - enabled: 1
-    path: Assets/Scenes/Sandbox.unity
-    guid: 566e7e7cb5461ec41a124ba76221151f
   m_configObjects: {}
