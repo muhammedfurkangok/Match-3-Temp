@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c7c632132e34e72bc997042514d1026, type: 3}
   m_Name: CD_GameSound
   m_EditorClassIdentifier: 
+  gameSoundData:
+  - gameSoundType: 0
+    audioClip: {fileID: 0}
