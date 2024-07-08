@@ -5,11 +5,19 @@ namespace Runtime.Managers
 {
     public class CurrencyManager : SingletonMonoBehaviour<CurrencyManager>
     {
-        public int coinAmount{ get; private set; }
+        private int coinAmount;
         
-        public void IncressCoinAmount(int amount)
+        public int GetCoinAmount() => coinAmount;
+        protected override void Awake()
         {
-            coinAmount += amount;
+            base.Awake();
+            
+            coinAmount = PlayerPrefs.GetInt(PlayerPrefsKeys.CoinsInt);
+        }
+        
+        public void IncressCoinAmount()
+        {
+            coinAmount += GameManager.Instance.GetLevelCoinAmount();
             PlayerPrefs.SetInt(PlayerPrefsKeys.CoinsInt, coinAmount);
         }
     }

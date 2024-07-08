@@ -16,7 +16,7 @@ namespace Runtime.Managers
         
         private void Start()
         {
-            startTimeInSeconds = Resources.Load<CD_LevelTime>("Data/CD_LevelTime").levelData[PlayerPrefs.GetInt(PlayerPrefsKeys.LevelValueInt)].timeInSeconds;
+            startTimeInSeconds = Resources.Load<CD_LevelTime>("Data/CD_LevelTime").levelData[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)].timeInSeconds;
             _time = startTimeInSeconds;
             UpdateTimerText();
             PassTimeForCountDown();
@@ -46,7 +46,7 @@ namespace Runtime.Managers
 
         private void OnTimerEnd()
         {
-            CoreGameSignals.Instance.onLevelFailed?.Invoke();
+            GameManager.Instance.SetGameStateLevelFail();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Runtime.Managers
         
         private void Start()
         {
-            _moveCount = Resources.Load<CD_LevelTime>("Data/CD_LevelTime").levelData[PlayerPrefs.GetInt(PlayerPrefsKeys.LevelValueInt)].moveCount;
+            _moveCount = Resources.Load<CD_LevelTime>("Data/CD_LevelTime").levelData[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)].moveCount;
             moverText.text = _moveCount.ToString();
         }
         
@@ -29,7 +29,7 @@ namespace Runtime.Managers
 
         private void OnMoveEnd()
         {
-            CoreGameSignals.Instance.onLevelFailed?.Invoke();
+            GameManager.Instance.SetGameStateLevelFail();
         }
         
     }

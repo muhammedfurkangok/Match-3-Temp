@@ -17,9 +17,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
            {
                if (soundType == sound.gameSoundType)
                {
-                   audioSource.clip = sound.audioClip;
-                   audioSource.Play();
-                   break; 
+                   audioSource.PlayOneShot(sound.audioClip);
+                   break;
                }
            }
        }

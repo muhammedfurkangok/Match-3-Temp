@@ -15,3 +15,7 @@ MonoBehaviour:
   gameSoundData:
   - gameSoundType: 0
     audioClip: {fileID: 0}
+  - gameSoundType: 1
+    audioClip: {fileID: 0}
+  - gameSoundType: 2
+    audioClip: {fileID: 0}

@@ -1,13 +1,18 @@
+using System;
 using Runtime.Enums;
 using Runtime.Extensions;
 using Runtime.Signals;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Runtime.Managers
 {
     public class GameManager : SingletonMonoBehaviour<GameManager>
     {
          public GameStates GameStates { get; private set;}
+         public event Action OnLevelSuccessful = delegate { };
+         public event Action OnLevelFailed = delegate { };
+         
          
         #region Shortcuts
         private void Update()
@@ -20,7 +25,6 @@ namespace Runtime.Managers
             {
                 SetGameStateLevelComplete();
             }
-              
         }
         #endregion
         
@@ -36,14 +40,19 @@ namespace Runtime.Managers
         public void SetGameStateLevelComplete()
         {
             GameStates = GameStates.LevelComplete;
-            CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
+            OnLevelSuccessful?.Invoke();
         }
         
         public void SetGameStateLevelFail()
         {
             GameStates = GameStates.LevelFail;
-            CoreGameSignals.Instance.onLevelFailed?.Invoke();
+            OnLevelFailed?.Invoke();
         }
-        
+
+        public int GetLevelCoinAmount()
+        {
+            Debug.Log("Game Manager Coin amount: " + PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt));
+            return 100 * PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt);
+        }
     }
 }

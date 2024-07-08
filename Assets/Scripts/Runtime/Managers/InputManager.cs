@@ -5,18 +5,22 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private float sphereCastRadius;
+
     private bool isInputBlocked;
     
     void Update()
     {
-        InputState();
+        CheckInputBlock();
         if(!isInputBlocked) GetInput();
     }
 
-    private void InputState()
+    private void CheckInputBlock()
     {
-        if (GameManager.Instance.GameStates != GameStates.Gameplay) isInputBlocked = true;
-        else isInputBlocked = false;
+        if (GameManager.Instance.GameStates != GameStates.Gameplay)
+            isInputBlocked = true;
+        else 
+            isInputBlocked = false;
     }
 
     private void GetInput()
@@ -25,7 +29,8 @@ public class InputManager : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit , Mathf.Infinity, layerMask))
+          
+            if (Physics.SphereCast(ray,sphereCastRadius, out hit , Mathf.Infinity, layerMask))
             {
                 hit.transform.GetComponent<Item>().OnSelected();
             }

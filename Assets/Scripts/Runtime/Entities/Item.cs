@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Runtime.Managers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Item : MonoBehaviour
 {
-   [SerializeField] private bool isWİnningItem;
+   [SerializeField] private bool isWinningItem;
    public void OnSelected()
    {
-         if (isWİnningItem)
+         if (isWinningItem)
          {
-            Debug.Log("You Win!");
+            GameManager.Instance.SetGameStateLevelComplete();
          }
          else
          {
-            Debug.Log("You Lose!");
+            GameManager.Instance.SetGameStateLevelFail();
          }
    }
 }

@@ -17,35 +17,37 @@ namespace Runtime.Managers
         [Header("Buttons")]
         [SerializeField] private Button settingsButton;
         [SerializeField] private Button nextLevelButton;
+        [SerializeField] private Button retryLevelButton;
         [SerializeField] private Button restartLevelButton;
         
         [Header("Texts")]
         [SerializeField] private TextMeshProUGUI coinText;
         [SerializeField] private TextMeshProUGUI levelText;
         
-        private int coinAmount;
         private bool isSettingsClicked = false;
 
       
         private void Start()
         {
             AddListeners();
-            levelText.text = $"Level {PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt).ToString()}";
             SubscribeEvents();
-            UpdateUI();
+            UpdateCoinText();
+           
+            levelText.text = $"Level {PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt).ToString()}";
+        }
+
+        private void UpdateCoinText()
+        {
+            coinText.text = CurrencyManager.Instance.GetCoinAmount().ToString(); 
         }
         
-        private void UpdateUI()
-        {
-            coinText.text = PlayerPrefs.GetInt(PlayerPrefsKeys.CoinsInt).ToString();
-            levelText.text =  $"Level {PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)}";
-        }
         #region Buttons
         private void AddListeners()
         {
             settingsButton.onClick.AddListener(OnSettingsButtonClicked);
             nextLevelButton.onClick.AddListener(OnNextLevelButtonClicked);
             restartLevelButton.onClick.AddListener(OnRestartLevelButtonClicked);
+            retryLevelButton.onClick.AddListener(OnRestartLevelButtonClicked);
         }
         
         private void OnSettingsButtonClicked()
@@ -62,64 +64,48 @@ namespace Runtime.Managers
                 settingsPanel.SetActive(false);
                 GameManager.Instance.SetGameStateGameplay();
             }
-                
         }
         
         private void OnNextLevelButtonClicked()
         {
-            // CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
-            CurrencyManager.Instance.IncressCoinAmount(100);
-            //level index ++ ?
-            UpdateUI();
+            CurrencyManager.Instance.IncressCoinAmount();
+            //unitask 2 sn ve animasyon
+            LevelManager.Instance.NextLevel();
         }
         
         private void OnRestartLevelButtonClicked()
         {
-           //CoreGameSignals.Instance.onRestartLevel?.Invoke();
+            LevelManager.Instance.RestartLevel();
         }
-        
         
         private void RemoveListeners()
         {
             settingsButton.onClick.RemoveListener(OnSettingsButtonClicked);
             nextLevelButton.onClick.RemoveListener(OnNextLevelButtonClicked);
             restartLevelButton.onClick.RemoveListener(OnRestartLevelButtonClicked);
+            retryLevelButton.onClick.RemoveListener(OnRestartLevelButtonClicked);
         }
         #endregion
         #region Events
         private void SubscribeEvents()
         {
-            CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
-            CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
+            GameManager.Instance.OnLevelSuccessful += OnLevelSuccessful;
+            GameManager.Instance.OnLevelFailed += OnLevelFailed;
         }
         private void OnLevelSuccessful()
         {
             levelCompletePanel.SetActive(true);
-            UpdateUI();
         }
-
         
         private void OnLevelFailed()
         {
             levelFailPanel.SetActive(true);
         }
-
-        public void NextLevel()
-        {
-            CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
-        }
-
-        public void RestartLevel()
-        {
-            CoreGameSignals.Instance.onRestartLevel?.Invoke();
-        }
         
-      
-
         private void UnSubscribeEvents()
         {
-            CoreGameSignals.Instance.onLevelSuccessful -= OnLevelSuccessful;
-            CoreGameSignals.Instance.onLevelFailed -= OnLevelFailed;
+            GameManager.Instance.OnLevelSuccessful -= OnLevelSuccessful;
+            GameManager.Instance.OnLevelFailed -= OnLevelFailed;
         }
 
         #endregion

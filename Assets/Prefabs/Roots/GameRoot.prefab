@@ -690,6 +690,7 @@ Transform:
   - {fileID: 6500591772640158605}
   - {fileID: 4596045872083718600}
   - {fileID: 3955734859078629403}
+  - {fileID: 5061573770044814841}
   - {fileID: 93229993422879444}
   - {fileID: 536808083933914814}
   - {fileID: 2771241424544535754}
@@ -961,6 +962,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 8
+  sphereCastRadius: 0.1
 --- !u!1 &1744516888222878359
 GameObject:
   m_ObjectHideFlags: 0
@@ -2251,6 +2253,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6cc16a29ca9414683501e4390c9536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 3955616839292706389}
+  COLLECTION: {fileID: 11400000, guid: ec46fd4f62f7f4c43a91d9caa1980be6, type: 2}
+--- !u!1 &5081866831314661669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5061573770044814841}
+  - component: {fileID: 5201747674717687483}
+  m_Layer: 0
+  m_Name: CurrencyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5061573770044814841
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081866831314661669}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1562931937873758865}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5201747674717687483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081866831314661669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf42f03afd840cab099b01eeb445c7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinAmount: 0
 --- !u!1 &5352461055120106619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2547,19 +2596,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4853330823285971763}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4266331332040446013}
-        m_TargetAssemblyTypeName: Runtime.Managers.LevelManager, Assembly-CSharp
-        m_MethodName: RestartLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &5924084647540737998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2756,19 +2793,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6421889589010145524}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4266331332040446013}
-        m_TargetAssemblyTypeName: Runtime.Managers.LevelManager, Assembly-CSharp
-        m_MethodName: NextLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &6710494305471435633
 GameObject:
   m_ObjectHideFlags: 0
@@ -3372,7 +3397,7 @@ GameObject:
   - component: {fileID: 4067566845681582124}
   - component: {fileID: 6362265671978360748}
   m_Layer: 0
-  m_Name: Next_Button
+  m_Name: Restart_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3479,19 +3504,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4067566845681582124}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4266331332040446013}
-        m_TargetAssemblyTypeName: Runtime.Managers.LevelManager, Assembly-CSharp
-        m_MethodName: RestartLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &8371032556130793788
 GameObject:
   m_ObjectHideFlags: 0
@@ -3662,6 +3675,9 @@ MonoBehaviour:
   settingsPanel: {fileID: 1619377222685841786}
   levelFailPanel: {fileID: 3372101725653272407}
   settingsButton: {fileID: 3890413473207457039}
+  nextLevelButton: {fileID: 1480646831709783062}
+  retryLevelButton: {fileID: 6362265671978360748}
+  restartLevelButton: {fileID: 601428900181158952}
   coinText: {fileID: 4941996272047970624}
   levelText: {fileID: 2031625592395509110}
 --- !u!1 &8788148987747525691
