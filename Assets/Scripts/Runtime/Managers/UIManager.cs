@@ -1,3 +1,6 @@
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using Runtime.Enums;
 using Runtime.Extensions;
 using Runtime.Signals;
 using TMPro;
@@ -19,10 +22,17 @@ namespace Runtime.Managers
         [SerializeField] private Button nextLevelButton;
         [SerializeField] private Button retryLevelButton;
         [SerializeField] private Button restartLevelButton;
+        [SerializeField] private Button coinButton;
         
         [Header("Texts")]
         [SerializeField] private TextMeshProUGUI coinText;
         [SerializeField] private TextMeshProUGUI levelText;
+        
+        [Header("Images")]
+        [SerializeField] private Image levelWinEmoji;
+        [SerializeField] private Image levelWinButton;
+        [SerializeField] private Image levelFailEmoji;
+        [SerializeField] private Image levelFailButton;
         
         private bool isSettingsClicked = false;
 
@@ -45,14 +55,22 @@ namespace Runtime.Managers
         private void AddListeners()
         {
             settingsButton.onClick.AddListener(OnSettingsButtonClicked);
+            coinButton.onClick.AddListener(OnCoinButtonClicked);
             nextLevelButton.onClick.AddListener(OnNextLevelButtonClicked);
             restartLevelButton.onClick.AddListener(OnRestartLevelButtonClicked);
             retryLevelButton.onClick.AddListener(OnRestartLevelButtonClicked);
         }
-        
+
+        private void OnCoinButtonClicked()
+        {
+            SoundManager.Instance.PlaySound(GameSoundType.ButtonClick);
+            coinButton.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.5f, 10, 1);
+        }
+
         private void OnSettingsButtonClicked()
         {
             isSettingsClicked = !isSettingsClicked;
+            settingsButton.transform.DORotate( new Vector3(0,0, isSettingsClicked ? 180 : 0), 0.5f, RotateMode.FastBeyond360).SetEase(Ease.OutBack);
 
             if (isSettingsClicked)
             {
@@ -64,23 +82,28 @@ namespace Runtime.Managers
                 settingsPanel.SetActive(false);
                 GameManager.Instance.SetGameStateGameplay();
             }
+            SoundManager.Instance.PlaySound(GameSoundType.ButtonClick);
         }
         
-        private void OnNextLevelButtonClicked()
+        private async void OnNextLevelButtonClicked()
         {
             CurrencyManager.Instance.IncressCoinAmount();
-            //unitask 2 sn ve animasyon
+            SoundManager.Instance.PlaySound(GameSoundType.ButtonClick);
+            //anim
+            await UniTask.WaitForSeconds(2);
             LevelManager.Instance.NextLevel();
         }
         
         private void OnRestartLevelButtonClicked()
         {
+            SoundManager.Instance.PlaySound(GameSoundType.ButtonClick);
             LevelManager.Instance.RestartLevel();
         }
         
         private void RemoveListeners()
         {
             settingsButton.onClick.RemoveListener(OnSettingsButtonClicked);
+            coinButton.onClick.RemoveListener(OnCoinButtonClicked);
             nextLevelButton.onClick.RemoveListener(OnNextLevelButtonClicked);
             restartLevelButton.onClick.RemoveListener(OnRestartLevelButtonClicked);
             retryLevelButton.onClick.RemoveListener(OnRestartLevelButtonClicked);
@@ -92,14 +115,24 @@ namespace Runtime.Managers
             GameManager.Instance.OnLevelSuccessful += OnLevelSuccessful;
             GameManager.Instance.OnLevelFailed += OnLevelFailed;
         }
-        private void OnLevelSuccessful()
-        {
-            levelCompletePanel.SetActive(true);
+       private void OnLevelSuccessful()
+       {
+        SoundManager.Instance.PlaySound(GameSoundType.LevelComplete);
+        levelCompletePanel.SetActive(true);
+        
+        levelWinEmoji.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 3f, 5, 1).SetLoops(-1, LoopType.Yoyo);
+        levelWinEmoji.transform.DORotate( new Vector3(0,0, 10), 1f).SetLoops(-1, LoopType.Yoyo);
+        levelWinButton.transform.DOPunchPosition(new Vector3(0, 60f, 0), 4f, 5, 1).SetLoops(-1, LoopType.Yoyo);
         }
+
         
         private void OnLevelFailed()
         {
+            SoundManager.Instance.PlaySound(GameSoundType.LevelFail);
             levelFailPanel.SetActive(true);
+            levelFailEmoji.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 3f, 5, 1).SetLoops(-1, LoopType.Yoyo);
+            levelFailEmoji.transform.DORotate( new Vector3(0,0, 10), 1f).SetLoops(-1, LoopType.Yoyo);
+            levelFailButton.transform.DOPunchPosition(new Vector3(0, 60f, 0), 4f, 5, 1).SetLoops(-1, LoopType.Yoyo);
         }
         
         private void UnSubscribeEvents()
