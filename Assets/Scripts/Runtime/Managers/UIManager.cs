@@ -122,7 +122,7 @@ namespace Runtime.Managers
         
         levelWinEmoji.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 3f, 5, 1).SetLoops(-1, LoopType.Yoyo);
         levelWinEmoji.transform.DORotate( new Vector3(0,0, 10), 1f).SetLoops(-1, LoopType.Yoyo);
-        levelWinButton.transform.DOPunchPosition(new Vector3(0, 60f, 0), 4f, 5, 1).SetLoops(-1, LoopType.Yoyo);
+        levelWinButton.transform.DOPunchPosition(new Vector3(0, 60f, 0), 4f, 5, 1);
         }
 
         
@@ -132,7 +132,7 @@ namespace Runtime.Managers
             levelFailPanel.SetActive(true);
             levelFailEmoji.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 3f, 5, 1).SetLoops(-1, LoopType.Yoyo);
             levelFailEmoji.transform.DORotate( new Vector3(0,0, 10), 1f).SetLoops(-1, LoopType.Yoyo);
-            levelFailButton.transform.DOPunchPosition(new Vector3(0, 60f, 0), 4f, 5, 1).SetLoops(-1, LoopType.Yoyo);
+            levelFailButton.transform.DOPunchPosition(new Vector3(0, 60f, 0), 4f, 5, 1);
         }
         
         private void UnSubscribeEvents()
