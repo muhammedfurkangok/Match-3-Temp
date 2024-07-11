@@ -14,6 +14,10 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     [Header("Glissando Audio Source")]
     [SerializeField] private AudioSource glissandoAudioSource;
 
+    [Header("Random Pitch Audio Source")] 
+    [SerializeField] private AudioSource randomPitchAudioSource;
+
+    [Header("Sound's")]
     [SerializeField] private CD_GameSound COLLECTION;
 
     private float glissandoDuration = 2f;
@@ -29,6 +33,22 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
                 if (soundType == sound.gameSoundType)
                 {
                     audioSource.PlayOneShot(sound.audioClip);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void PlayRandomPitchSound(GameSoundType soundType)
+    {
+        if(SettingsManager.Instance.isSoundActive)
+        {
+            foreach (var sound in COLLECTION.gameSoundData)
+            {
+                if (soundType == sound.gameSoundType && sound.hasExternalAudioSource && sound.hasRandomPitch)
+                {
+                    randomPitchAudioSource.pitch = Random.Range(0.8f, 1.2f);
+                    randomPitchAudioSource.PlayOneShot(sound.audioClip);
                     break;
                 }
             }
