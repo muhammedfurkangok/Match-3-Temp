@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager<T> where T : Component
+public abstract class PoolManager<T> where T : Component
 {
     private readonly Queue<T> pool = new Queue<T>();
     private readonly T prefab;

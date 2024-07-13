@@ -2449,7 +2449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 3955616839292706389}
   glissandoAudioSource: {fileID: 4408140854144292825}
-  randomPitchAudioSource: {fileID: 0}
+  randomPitchAudioSource: {fileID: 9045287932725986442}
   COLLECTION: {fileID: 11400000, guid: ec46fd4f62f7f4c43a91d9caa1980be6, type: 2}
 --- !u!1 &5081866831314661669
 GameObject:
