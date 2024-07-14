@@ -8,7 +8,6 @@ namespace Runtime.Data.ValueObject
     {
         public GameSoundType gameSoundType;
         public AudioClip audioClip;
-        public bool hasExternalAudioSource;
         public bool hasRandomPitch;
         public bool hasGlissando;
     }

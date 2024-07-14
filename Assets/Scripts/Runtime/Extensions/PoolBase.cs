@@ -1,15 +1,14 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public abstract class PoolManager<T> where T : Component
+public abstract class PoolBase<T> where T : Component
 {
     private readonly Queue<T> pool = new Queue<T>();
     private readonly T prefab;
     private readonly Transform parentTransform;
 
-    public PoolManager(T prefab, int initialSize, Transform parentTransform = null)
+    public PoolBase(T prefab, int initialSize, Transform parentTransform = null)
     {
         this.prefab = prefab;
         this.parentTransform = parentTransform;
@@ -18,7 +17,7 @@ public abstract class PoolManager<T> where T : Component
             AddToPool(CreateNewInstance());
         }
     }
-
+    
     public T GetItem(float returnTime = 0)
     {
         if (pool.Count == 0)
@@ -31,16 +30,17 @@ public abstract class PoolManager<T> where T : Component
 
         if (returnTime > 0)
         {
-            MonoBehaviour instance = item.GetComponent<MonoBehaviour>();
-            if (instance != null)
-            {
-                instance.StartCoroutine(ReturnToPoolAfterTime(item, returnTime));
-            }
+            ReturnToPoolAfterTime(item, returnTime);
         }
-
         return item;
     }
-
+    
+    private async void ReturnToPoolAfterTime(T item, float time)
+    {
+        await UniTask.WaitForSeconds(time);
+        ReturnItem(item);
+    }
+    
     public void ReturnItem(T item)
     {
         item.gameObject.SetActive(false);
@@ -58,11 +58,5 @@ public abstract class PoolManager<T> where T : Component
         T newItem = UnityEngine.Object.Instantiate(prefab, parentTransform);
         newItem.gameObject.SetActive(false);
         return newItem;
-    }
-
-    private IEnumerator ReturnToPoolAfterTime(T item, float time)
-    {
-        yield return new WaitForSeconds(time);
-        ReturnItem(item);
     }
 }

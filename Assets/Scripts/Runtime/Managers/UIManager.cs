@@ -16,6 +16,7 @@ namespace Runtime.Managers
         [SerializeField] private GameObject levelCompletePanel;
         [SerializeField] private GameObject settingsPanel;
         [SerializeField] private GameObject levelFailPanel;
+        [SerializeField] private GameObject moveCountPanel;
         
         [Header("Buttons")]
         [SerializeField] private Button settingsButton;
@@ -28,22 +29,40 @@ namespace Runtime.Managers
         [SerializeField] private TextMeshProUGUI coinText;
         [SerializeField] private TextMeshProUGUI levelText;
         
+        [SerializeField] public TextMeshProUGUI timerText;
+        [SerializeField] public TextMeshProUGUI moverText;
+        
         [Header("Images")]
         [SerializeField] private Image levelWinEmoji;
         [SerializeField] private Image levelWinButton;
         [SerializeField] private Image levelFailEmoji;
         [SerializeField] private Image levelFailButton;
         
+        [Header("Private's")]
         private bool isSettingsClicked = false;
+        private Tween coinTween;
 
       
         private void Start()
         {
+            CheckRemoteConfig();
             AddListeners();
             SubscribeEvents();
             UpdateCoinText();
            
             levelText.text = $"Level {PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt).ToString()}";
+        }
+
+        private void CheckRemoteConfig()
+        {
+            if (!RemoteConfigDummy.hasTimer)
+            {
+                timerText.gameObject.SetActive(false);
+            }
+            if (!RemoteConfigDummy.hasMoveCounter)
+            {
+                moveCountPanel.SetActive(false);
+            }
         }
 
         private void UpdateCoinText()
@@ -64,7 +83,10 @@ namespace Runtime.Managers
         private void OnCoinButtonClicked()
         {
             SoundManager.Instance.PlaySound(GameSoundType.ButtonClick);
-            coinButton.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.5f, 10, 1);
+            coinTween?.Kill();
+            coinButton.transform.localScale = Vector3.one;
+            coinTween = coinButton.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.5f, 10, 1);
+            
         }
 
         private void OnSettingsButtonClicked()

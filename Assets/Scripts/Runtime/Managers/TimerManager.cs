@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using Runtime.Data.UnityObject;
 using Runtime.Enums;
@@ -10,27 +11,37 @@ namespace Runtime.Managers
 {
     public class TimerManager : SingletonMonoBehaviour<TimerManager>
     {
-        [SerializeField] private TextMeshProUGUI timerText;
-        private int startTimeInSeconds;
-        private int _time;
+       [SerializeField] private int _time;
+       [SerializeField] private bool _isTimerActive;
+        
         
         private void Start()
         {
-            startTimeInSeconds = Resources.Load<CD_LevelTime>("Data/CD_LevelTime").levelData[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)].timeInSeconds;
-            _time = startTimeInSeconds;
+            if (!RemoteConfigDummy.hasTimer)
+            {
+                return;
+            }
+            
+            Init();
             UpdateTimerText();
             PassTimeForCountDown();
+        }
+
+        private void Init()
+        {
+            _isTimerActive = true;
+            _time = RemoteConfigDummy.timers[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)];
         }
 
         private void UpdateTimerText()
         {
             int minutes = _time / 60;
             int seconds = _time % 60;
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            UIManager.Instance.timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
         private async void PassTimeForCountDown()
         {
-            while (true)
+            while (_isTimerActive)
             {
                 await UniTask.WaitForSeconds(1);
                 if (GameManager.Instance.GameStates != GameStates.Gameplay) await UniTask.WaitUntil(() => GameManager.Instance.GameStates == GameStates.Gameplay);
@@ -47,6 +58,11 @@ namespace Runtime.Managers
         private void OnTimerEnd()
         {
             GameManager.Instance.SetGameStateLevelFail();
+        }
+
+        private void OnDisable()
+        {
+            _isTimerActive = false;
         }
     }
 }

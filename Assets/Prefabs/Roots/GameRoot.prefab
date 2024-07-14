@@ -1064,16 +1064,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897738166517254852}
-  m_LocalRotation: {x: -0, y: -0.12011917, z: -0, w: 0.99275947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -9.651997}
   m_LocalScale: {x: 1.4480556, y: 1.4480556, z: 1.4480556}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6066837728855878341}
-  m_LocalEulerAnglesHint: {x: 0, y: -13.798, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -88.66, y: -141.21997}
+  m_AnchoredPosition: {x: -163.4, y: -141.21997}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4136747442851901538
@@ -1138,7 +1138,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2451,6 +2451,9 @@ MonoBehaviour:
   glissandoAudioSource: {fileID: 4408140854144292825}
   randomPitchAudioSource: {fileID: 9045287932725986442}
   COLLECTION: {fileID: 11400000, guid: ec46fd4f62f7f4c43a91d9caa1980be6, type: 2}
+  glissandoPitchRange: 2
+  glissandoDuration: 1
+  glissandoDefaultPitch: 1
 --- !u!1 &5081866831314661669
 GameObject:
   m_ObjectHideFlags: 0
@@ -3471,7 +3474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88d85fb4e034e4a840dc70ffd6bd064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moverText: {fileID: 5706829338660950645}
+  _moveCount: 0
 --- !u!1 &7350541212192306376
 GameObject:
   m_ObjectHideFlags: 0
@@ -3789,7 +3792,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f8b8462cb5c4ecda208694c51b9df7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 1982143485782429099}
+  _time: 0
+  _isTimerActive: 0
 --- !u!1 &8518512178425883260
 GameObject:
   m_ObjectHideFlags: 0
@@ -3914,6 +3918,7 @@ MonoBehaviour:
   levelCompletePanel: {fileID: 70935790460731176}
   settingsPanel: {fileID: 1619377222685841786}
   levelFailPanel: {fileID: 3372101725653272407}
+  moveCountPanel: {fileID: 7426783859018588786}
   settingsButton: {fileID: 3890413473207457039}
   nextLevelButton: {fileID: 1480646831709783062}
   retryLevelButton: {fileID: 6362265671978360748}
@@ -3921,6 +3926,8 @@ MonoBehaviour:
   coinButton: {fileID: 8784448531096165744}
   coinText: {fileID: 4941996272047970624}
   levelText: {fileID: 2031625592395509110}
+  timerText: {fileID: 1982143485782429099}
+  moverText: {fileID: 5706829338660950645}
   levelWinEmoji: {fileID: 2186693293441077897}
   levelWinButton: {fileID: 6421889589010145524}
   levelFailEmoji: {fileID: 2350786663879125139}

@@ -20,9 +20,11 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     [Header("Sound's")]
     [SerializeField] private CD_GameSound COLLECTION;
 
-    private float glissandoDuration = 2f;
-    private float glissandoPitchRange = 2f;
-    private Coroutine glissandoCoroutine;
+    [Header("Glissando Settings")]
+    [SerializeField] private float glissandoPitchRange = 2f;
+    [SerializeField] private float glissandoDuration = 1f;
+    [SerializeField] private float glissandoDefaultPitch = 1f;
+    [SerializeField] private Coroutine glissandoCoroutine;
 
     public void PlaySound(GameSoundType soundType)
     {
@@ -32,48 +34,31 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
             {
                 if (soundType == sound.gameSoundType)
                 {
-                    audioSource.PlayOneShot(sound.audioClip);
-                    break;
-                }
-            }
-        }
-    }
-
-    public void PlayRandomPitchSound(GameSoundType soundType)
-    {
-        if(SettingsManager.Instance.isSoundActive)
-        {
-            foreach (var sound in COLLECTION.gameSoundData)
-            {
-                if (soundType == sound.gameSoundType && sound.hasExternalAudioSource && sound.hasRandomPitch)
-                {
-                    randomPitchAudioSource.pitch = Random.Range(0.8f, 1.2f);
-                    randomPitchAudioSource.PlayOneShot(sound.audioClip);
-                    break;
-                }
-            }
-        }
-    }
-
-    public void PlayGlissandoSound(GameSoundType soundType)
-    {
-        if (SettingsManager.Instance.isSoundActive)
-        {
-            foreach (var sound in COLLECTION.gameSoundData)
-            {
-                if (soundType == sound.gameSoundType && sound.hasExternalAudioSource && sound.hasGlissando)
-                {
-                    if (glissandoCoroutine != null)
+                    if (sound.hasRandomPitch)
                     {
-                        StopCoroutine(glissandoCoroutine);
+                        randomPitchAudioSource.pitch = Random.Range(0.8f, 1.2f);
+                        randomPitchAudioSource.PlayOneShot(sound.audioClip);
+                        break;
                     }
-                    glissandoCoroutine = StartCoroutine(PlayGlissando(sound.audioClip));
-                    break;
+                    else if (sound.hasGlissando)
+                    {
+                        if (glissandoCoroutine != null)
+                        {
+                            StopCoroutine(glissandoCoroutine);
+                        }
+                        glissandoCoroutine = StartCoroutine(PlayGlissando(sound.audioClip));
+                        break;
+                    }
+                    else
+                    {
+                        audioSource.PlayOneShot(sound.audioClip);
+                        break;   
+                    }
                 }
             }
         }
     }
-
+    
     private IEnumerator PlayGlissando(AudioClip clip)
     {
         float elapsedTime = 0f;
@@ -89,6 +74,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
             yield return null;
         }
 
-        glissandoAudioSource.pitch = initialPitch;
+        glissandoAudioSource.pitch = glissandoDefaultPitch;
     }
 }

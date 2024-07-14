@@ -1,21 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Runtime.Enums;
 using Runtime.Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class Item : MonoBehaviour
 {
-   [SerializeField] private bool isWinningItem;
+   
    public void OnSelected()
    {
-         if (isWinningItem)
-         {
-            GameManager.Instance.SetGameStateLevelComplete();
-         }
-         else
-         {
-            GameManager.Instance.SetGameStateLevelFail();
-         }
+         SoundManager.Instance.PlaySound(GameSoundType.Touch);
+         MoverManager.Instance.OnInputTaken();
    }
 }

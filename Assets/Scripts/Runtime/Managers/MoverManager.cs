@@ -1,26 +1,41 @@
 using System;
 using Runtime.Data.UnityObject;
-using Runtime.Signals;
-using TMPro;
+using Runtime.Extensions;
 using UnityEngine;
 
 namespace Runtime.Managers
 {
-    public class MoverManager : MonoBehaviour
+    public class MoverManager : SingletonMonoBehaviour<MoverManager>
     {
-        [SerializeField] private TextMeshProUGUI moverText;
-        private int _moveCount;
+        
+       [SerializeField] private int _moveCount;
         
         private void Start()
         {
-            _moveCount = Resources.Load<CD_LevelTime>("Data/CD_LevelTime").levelData[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)].moveCount;
-            moverText.text = _moveCount.ToString();
+            if (!RemoteConfigDummy.hasMoveCounter)
+            {
+                return;
+            }
+
+            Init();
         }
-        
+
+        private void Init()
+        {
+            _moveCount = RemoteConfigDummy.moves[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)];
+            UIManager.Instance.moverText.text = _moveCount.ToString();
+        }
+
         public void OnInputTaken()
         {
+            if (!RemoteConfigDummy.hasMoveCounter)
+            {
+                return;
+            }
+            
+            
             _moveCount--;
-            moverText.text = _moveCount.ToString();
+            UIManager.Instance.moverText.text = _moveCount.ToString();
             if (_moveCount <= 0)
             {
                 OnMoveEnd();
