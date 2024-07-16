@@ -54,7 +54,7 @@ namespace Runtime.Managers
             moverTextScale = moverText.transform.localScale;
             moverTextColor = moverText.color;
            
-            levelText.text = $"Level {PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt).ToString()}";
+            levelText.text = $"Level {PlayerPrefs.GetInt(PlayerPrefsKeys.FakeLevelIndexInt).ToString()}";
         }
 
         private void CheckRemoteConfig()
@@ -91,9 +91,7 @@ namespace Runtime.Managers
             moverText.transform.DOScale(Vector3.zero, 0.2f)
                 .OnComplete(() => moverText.transform.DOScale(moverTextScale, 0.2f)); 
         }
-
-
-
+        
         #region Buttons
         private void AddListeners()
         {
@@ -135,8 +133,10 @@ namespace Runtime.Managers
         {
             CurrencyManager.Instance.IncressCoinAmount();
             SoundManager.Instance.PlaySound(GameSoundType.ButtonClick);
+            nextLevelButton.enabled = false;
             //anim
             await UniTask.WaitForSeconds(2);
+            nextLevelButton.enabled = true;
             LevelManager.Instance.NextLevel();
         }
         
@@ -192,11 +192,6 @@ namespace Runtime.Managers
         {
             UnSubscribeEvents();
             RemoveListeners();
-        }
-
-        public void UpdateTimerText()
-        {
-            
         }
     }
 }

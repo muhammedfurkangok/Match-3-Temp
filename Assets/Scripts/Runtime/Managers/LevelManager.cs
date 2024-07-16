@@ -9,9 +9,12 @@ namespace Runtime.Managers
         protected override void Awake()
         {
             base.Awake();
-            
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) == 0)
+
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) == 0)
+            {
                  PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelIndexInt, 1);
+                 PlayerPrefs.SetInt(PlayerPrefsKeys.FakeLevelIndexInt, 1);
+            }
         }
 
         public void RestartLevel()
@@ -21,7 +24,14 @@ namespace Runtime.Managers
 
         public void NextLevel()
         {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.FakeLevelIndexInt, PlayerPrefs.GetInt(PlayerPrefsKeys.FakeLevelIndexInt) + 1);
             PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelIndexInt, PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) + 1);
+            
+            if(PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) > RemoteConfigDummy.levels.Count)
+            {
+               PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentLevelIndexInt, RemoteConfigDummy.LevelLoopStart);
+            }
+            
             SceneManager.LoadScene("Level" + " "+PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt));
         }
     }
