@@ -41,6 +41,8 @@ namespace Runtime.Managers
         [Header("Private's")]
         private bool isSettingsClicked = false;
         private Tween coinTween;
+        private Vector3 moverTextScale;
+        private Color moverTextColor;
 
       
         private void Start()
@@ -49,6 +51,8 @@ namespace Runtime.Managers
             AddListeners();
             SubscribeEvents();
             UpdateCoinText();
+            moverTextScale = moverText.transform.localScale;
+            moverTextColor = moverText.color;
            
             levelText.text = $"Level {PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt).ToString()}";
         }
@@ -69,7 +73,27 @@ namespace Runtime.Managers
         {
             coinText.text = CurrencyManager.Instance.GetCoinAmount().ToString(); 
         }
-        
+
+        public void UpdateMoverText()
+        {
+            MoverManager._moveCount--;
+            moverText.text = MoverManager._moveCount.ToString();
+            
+            moverText.DOKill(false);
+            moverText.color = moverTextColor;
+
+            if (MoverManager._moveCount <= 5 && MoverManager._moveCount > 0)
+            {
+                
+                moverText.DOColor(Color.red, 0.3f).SetLoops(-1, LoopType.Yoyo);
+            }
+            
+            moverText.transform.DOScale(Vector3.zero, 0.2f)
+                .OnComplete(() => moverText.transform.DOScale(moverTextScale, 0.2f)); 
+        }
+
+
+
         #region Buttons
         private void AddListeners()
         {
@@ -168,6 +192,11 @@ namespace Runtime.Managers
         {
             UnSubscribeEvents();
             RemoveListeners();
+        }
+
+        public void UpdateTimerText()
+        {
+            
         }
     }
 }

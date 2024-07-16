@@ -51,7 +51,6 @@ namespace Runtime.Managers
 
         public int GetLevelCoinAmount()
         {
-            Debug.Log("Game Manager Coin amount: " + PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt));
             return 100 * PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt);
         }
     }

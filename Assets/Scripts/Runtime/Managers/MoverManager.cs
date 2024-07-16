@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using Runtime.Data.UnityObject;
 using Runtime.Extensions;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace Runtime.Managers
     public class MoverManager : SingletonMonoBehaviour<MoverManager>
     {
         
-       [SerializeField] private int _moveCount;
+         public static int _moveCount;
         
         private void Start()
         {
@@ -22,7 +23,16 @@ namespace Runtime.Managers
 
         private void Init()
         {
-            _moveCount = RemoteConfigDummy.moves[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)];
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) < 0 || PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) >= RemoteConfigDummy.moves.Count)
+            {
+                Debug.LogError("Invalid timer index. Using default timer value.");
+                _moveCount = RemoteConfigDummy.defaultMoveCounter;
+            }
+            else
+            {
+                _moveCount = RemoteConfigDummy.moves[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)];
+            }
+            
             UIManager.Instance.moverText.text = _moveCount.ToString();
         }
 
@@ -33,9 +43,8 @@ namespace Runtime.Managers
                 return;
             }
             
+            UIManager.Instance.UpdateMoverText();
             
-            _moveCount--;
-            UIManager.Instance.moverText.text = _moveCount.ToString();
             if (_moveCount <= 0)
             {
                 OnMoveEnd();
