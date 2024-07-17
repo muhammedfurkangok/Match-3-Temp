@@ -4,10 +4,10 @@ using Runtime.Data.ValueObject;
 
 public class LevelEditorWindow : EditorWindow
 {
-    private LevelData levelData;
-    private int rows = 6;
-    private int columns = 5;
-    private float spaceModifier = 1f;
+    private LevelData _levelData;
+    private int _rows = 6;
+    private int _columns = 5;
+    private float _spaceModifier = 50f;
 
     [MenuItem("Tools/LevelCreator")]
     public static void ShowWindow()
@@ -17,23 +17,24 @@ public class LevelEditorWindow : EditorWindow
 
     private void OnEnable()
     {
-        levelData = new LevelData(columns, rows, spaceModifier);
+        _levelData = new LevelData();
+        GenerateGrid();
     }
 
     private void OnGUI()
     {
         GUILayout.Label("Level Creator", EditorStyles.boldLabel);
 
-        rows = EditorGUILayout.IntField("Rows", rows);
-        columns = EditorGUILayout.IntField("Columns", columns);
-        spaceModifier = EditorGUILayout.FloatField("Space Modifier", spaceModifier);
+        _rows = EditorGUILayout.IntField("Rows", _rows);
+        _columns = EditorGUILayout.IntField("Columns", _columns);
+        _spaceModifier = EditorGUILayout.FloatField("Space Modifier", _spaceModifier);
 
         if (GUILayout.Button("Generate Grid"))
         {
             GenerateGrid();
         }
 
-        if (levelData != null)
+        if (_levelData != null && _levelData.isOccupied != null)
         {
             DrawGrid();
         }
@@ -41,27 +42,41 @@ public class LevelEditorWindow : EditorWindow
 
     private void GenerateGrid()
     {
-        levelData = new LevelData(columns, rows, spaceModifier);
+        _levelData.Width = _columns;
+        _levelData.Height = _rows;
+        _levelData.isOccupied = new bool[_columns, _rows];
     }
 
     private void DrawGrid()
     {
-        for (int x = 0; x < rows; x++)
+        for (int x = 0; x < _rows; x++)
         {
             GUILayout.BeginHorizontal();
-            for (int y = 0; y < columns; y++)
+            for (int y = 0; y < _columns; y++)
             {
                 Color originalColor = GUI.backgroundColor;
-                GUI.backgroundColor = levelData.grids[x, y].isOccupied ? Color.green : Color.gray;
+                GUI.backgroundColor = _levelData.isOccupied[y, _rows - 1 - x] ? Color.green : Color.gray;
 
-                if (GUILayout.Button($"{y}x{(rows - 1 - x)}", GUILayout.Width(50), GUILayout.Height(50)))
+                if (GUILayout.Button($"{y}x{_rows - 1 - x}", GUILayout.Width(50), GUILayout.Height(50)))
                 {
-                    levelData.grids[x, y].isOccupied = !levelData.grids[x, y].isOccupied;
+                    _levelData.isOccupied[y, _rows - 1 - x] = !_levelData.isOccupied[y, _rows - 1 - x];
                 }
 
                 GUI.backgroundColor = originalColor;
             }
             GUILayout.EndHorizontal();
         }
+    }
+
+    private Vector2Int WorldSpaceToGridSpace(Vector3 worldPosition)
+    {
+        int x = Mathf.RoundToInt(worldPosition.x / _spaceModifier);
+        int y = Mathf.RoundToInt(worldPosition.z / _spaceModifier);
+        return new Vector2Int(x, y);
+    }
+
+    private Vector3 GridSpaceToWorldSpace(int x, int y)
+    {
+        return new Vector3(x * _spaceModifier, 0, y * _spaceModifier);
     }
 }
