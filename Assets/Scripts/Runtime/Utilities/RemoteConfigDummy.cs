@@ -13,16 +13,5 @@ public static class RemoteConfigDummy
     
     public static bool hasTimer = true;
     public static bool hasMoveCounter = true;
-
-
-    // public static void RemoveLevel(int level)
-    // {
-    //     int index = levels.IndexOf(level);
-    //     if (index != -1)
-    //     {
-    //         levels.RemoveAt(index);
-    //         timers.RemoveAt(index);
-    //         moves.RemoveAt(index);
-    //     }
-    // }
+    
 }

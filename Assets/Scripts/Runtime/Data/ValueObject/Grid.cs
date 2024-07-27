@@ -3,8 +3,9 @@ using UnityEngine;
 namespace Runtime.Data.ValueObject
 {
     [System.Serializable]
-    public struct GamePrefabData
+    public struct Grid
     {
-        public MonoBehaviour prefab;
+        public bool isOccupied;
+        public Vector2Int position;
     }
 }

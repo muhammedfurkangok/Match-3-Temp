@@ -7,6 +7,12 @@ namespace Runtime.Data.ValueObject
     {
         public int Width;
         public int Height;
-        public bool[,] isOccupied;
+        public Grid[] Grids;
+    
+        public Grid GetGrid(int x, int y)
+        {
+            return Grids[x*Height + y];
+        }
     }
+    
 }

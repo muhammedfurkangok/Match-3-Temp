@@ -1,24 +1,25 @@
+using Runtime.Data.UnityObject;
 using UnityEngine;
 using UnityEditor;
 using Runtime.Data.ValueObject;
+using UnityEngine.Serialization;
+using Grid = Runtime.Data.ValueObject.Grid;
 
-public class LevelEditorWindow : EditorWindow
+public class LevelEditorWindow : Editor
 {
-    private LevelData _levelData;
+    public CD_LevelData allLevelData;
+    private LevelData _currentLevelData;
+    
+    private int _currentLevelIndex;
     private int _rows = 6;
     private int _columns = 5;
     private float _spaceModifier = 50f;
 
-    [MenuItem("Tools/LevelCreator")]
-    public static void ShowWindow()
-    {
-        GetWindow<LevelEditorWindow>("Level Creator");
-    }
+  
 
     private void OnEnable()
     {
-        _levelData = new LevelData();
-        GenerateGrid();
+        _currentLevelData = allLevelData.levelData[_currentLevelIndex - 1];
     }
 
     private void OnGUI()
@@ -31,20 +32,20 @@ public class LevelEditorWindow : EditorWindow
 
         if (GUILayout.Button("Generate Grid"))
         {
-            GenerateGrid();
+            GenerateLevelData();
         }
 
-        if (_levelData != null && _levelData.isOccupied != null)
+        if (_currentLevelData != null && _currentLevelData.Grids != null)
         {
             DrawGrid();
         }
     }
 
-    private void GenerateGrid()
+    private void GenerateLevelData()
     {
-        _levelData.Width = _columns;
-        _levelData.Height = _rows;
-        _levelData.isOccupied = new bool[_columns, _rows];
+        _currentLevelData.Width = _columns;
+        _currentLevelData.Height = _rows;
+        _currentLevelData.Grids = new Grid[_columns*_rows];
     }
 
     private void DrawGrid()
@@ -55,11 +56,12 @@ public class LevelEditorWindow : EditorWindow
             for (int y = 0; y < _columns; y++)
             {
                 Color originalColor = GUI.backgroundColor;
-                GUI.backgroundColor = _levelData.isOccupied[y, _rows - 1 - x] ? Color.green : Color.gray;
+                GUI.backgroundColor = _currentLevelData.GetGrid(x,y).isOccupied ? Color.green : Color.gray;
 
                 if (GUILayout.Button($"{y}x{_rows - 1 - x}", GUILayout.Width(50), GUILayout.Height(50)))
                 {
-                    _levelData.isOccupied[y, _rows - 1 - x] = !_levelData.isOccupied[y, _rows - 1 - x];
+                     var grid = _currentLevelData.GetGrid(x,y);
+                     grid.isOccupied = !grid.isOccupied;
                 }
 
                 GUI.backgroundColor = originalColor;

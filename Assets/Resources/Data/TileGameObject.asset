@@ -9,16 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bc6e4cd06a24f9d94c7ce7cc6256139, type: 3}
-  m_Name: CD_LevelTime
+  m_Script: {fileID: 11500000, guid: 9118b3261c194cfe9f3133c103f37d25, type: 3}
+  m_Name: TileGameObject
   m_EditorClassIdentifier: 
-  levelData:
-  - Width: 0
-    Height: 0
-    Grids: []
-  - Width: 0
-    Height: 0
-    Grids: []
-  - Width: 0
-    Height: 0
-    Grids: []
+  gamePrefab:
+    prefab: {fileID: 0}

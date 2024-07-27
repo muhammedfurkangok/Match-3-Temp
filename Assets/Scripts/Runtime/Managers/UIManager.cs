@@ -63,7 +63,15 @@ namespace Runtime.Managers
             {
                 timerText.gameObject.SetActive(false);
             }
-            if (!RemoteConfigDummy.hasMoveCounter)
+            else if (RemoteConfigDummy.hasTimer)
+            {
+                   timerText.gameObject.SetActive(true);
+            }
+            else if (!RemoteConfigDummy.hasMoveCounter)
+            {
+                moveCountPanel.SetActive(false);    
+            }
+            else if (!RemoteConfigDummy.hasMoveCounter)
             {
                 moveCountPanel.SetActive(false);
             }
