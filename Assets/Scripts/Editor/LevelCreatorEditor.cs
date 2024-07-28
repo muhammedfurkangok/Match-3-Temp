@@ -1,49 +1,53 @@
+using Runtime.Helpers;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(LevelEditorScript))]
-public class LevelEditorInspector : Editor
+namespace Editor
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(LevelCreatorScript))]
+    public class LevelCreatorEditor : UnityEditor.Editor
     {
-        LevelEditorScript levelEditorScript = (LevelEditorScript)target;
-
-        DrawDefaultInspector();
-
-        EditorGUILayout.Space();
-
-        if (GUILayout.Button("Generate Grid"))
+        public override void OnInspectorGUI()
         {
-            levelEditorScript.GenerateLevelData();
-        }
+            LevelCreatorScript levelCreatorScript = (LevelCreatorScript)target;
 
-        if (levelEditorScript.GetCurrentLevelData() != null && levelEditorScript.GetCurrentLevelData().Grids != null)
-        {
-            DrawGrid(levelEditorScript);
-        }
-    }
+            DrawDefaultInspector();
 
-    private void DrawGrid(LevelEditorScript levelEditorScript)
-    {
-        int rows = levelEditorScript.GetRows();
-        int columns = levelEditorScript.GetColumns();
+            EditorGUILayout.Space();
 
-        for (int x = 0; x < rows; x++)
-        {
-            EditorGUILayout.BeginHorizontal();
-            for (int y = 0; y < columns; y++)
+            if (GUILayout.Button("Generate Grid"))
             {
-                Color originalColor = GUI.backgroundColor;
-                GUI.backgroundColor = levelEditorScript.GetCurrentLevelData().GetGrid(x, y).isOccupied ? Color.green : Color.gray;
-
-                if (GUILayout.Button($"{y}x{rows - 1 - x}", GUILayout.Width(50), GUILayout.Height(50)))
-                {
-                    levelEditorScript.ToggleGridOccupancy(x, y);
-                }
-
-                GUI.backgroundColor = originalColor;
+                levelCreatorScript.GenerateLevelData();
             }
-            EditorGUILayout.EndHorizontal();
+
+            if (levelCreatorScript.GetCurrentLevelData() != null && levelCreatorScript.GetCurrentLevelData().Grids != null)
+            {
+                DrawGrid(levelCreatorScript);
+            }
+        }
+
+        private void DrawGrid(LevelCreatorScript levelCreatorScript)
+        {
+            int rows = levelCreatorScript.GetRows();
+            int columns = levelCreatorScript.GetColumns();
+
+            for (int x = 0; x < rows; x++)
+            {
+                EditorGUILayout.BeginHorizontal();
+                for (int y = 0; y < columns; y++)
+                {
+                    Color originalColor = GUI.backgroundColor;
+                    GUI.backgroundColor = levelCreatorScript.GetCurrentLevelData().GetGrid(x, y).isOccupied ? Color.green : Color.gray;
+
+                    if (GUILayout.Button($"{y}x{rows - 1 - x}", GUILayout.Width(50), GUILayout.Height(50)))
+                    {
+                        levelCreatorScript.ToggleGridOccupancy(x, y);
+                    }
+
+                    GUI.backgroundColor = originalColor;
+                }
+                EditorGUILayout.EndHorizontal();
+            }
         }
     }
 }
