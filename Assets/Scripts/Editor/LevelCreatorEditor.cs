@@ -7,6 +7,7 @@ namespace Editor
     [CustomEditor(typeof(LevelCreatorScript))]
     public class LevelCreatorEditor : UnityEditor.Editor
     {
+        
         public override void OnInspectorGUI()
         {
             LevelCreatorScript levelCreatorScript = (LevelCreatorScript)target;
@@ -16,7 +17,7 @@ namespace Editor
                 fontSize = 16,
                 alignment = TextAnchor.UpperLeft
             };
-
+            
             DrawDefaultInspector();
 
             EditorGUILayout.Space();
@@ -26,7 +27,7 @@ namespace Editor
                 levelCreatorScript.GenerateLevelData();
             }
 
-            EditorGUILayout.LabelField("Save/Load Grid", titleStyle);
+            EditorGUILayout.LabelField("Save/Load/Reset Grid", titleStyle);
 
             EditorGUILayout.BeginHorizontal();
 
@@ -63,11 +64,12 @@ namespace Editor
             for (int x = 0; x < rows; x++)
             {
                 EditorGUILayout.BeginHorizontal();
+                // GUILayout.FlexibleSpace();
 
                 for (int y = 0; y < columns; y++)
                 {
                     Color originalColor = GUI.backgroundColor;
-                    GUI.backgroundColor = levelCreatorScript.GetCurrentLevelData().GetGrid(x, y).isOccupied ? /*"levelCreatorScript.GetSelectedGridColor()"*/ Color.green : Color.gray;
+                    GUI.backgroundColor = levelCreatorScript.GetCurrentLevelData().GetGrid(x, y).isOccupied ? Color.green : Color.gray;
 
                     if (GUILayout.Button($"{y}x{rows - 1 - x}", GUILayout.Width(50), GUILayout.Height(50)))
                     {
@@ -76,8 +78,10 @@ namespace Editor
                     }
 
                     GUI.backgroundColor = originalColor;
+                    // GUILayout.Space(5);
                 }
 
+                // GUILayout.FlexibleSpace();
                 EditorGUILayout.EndHorizontal();
             }
         }

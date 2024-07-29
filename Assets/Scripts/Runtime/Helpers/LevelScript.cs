@@ -2,6 +2,7 @@ using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
 using Runtime.Enums;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Helpers
 {
@@ -9,21 +10,20 @@ namespace Runtime.Helpers
     public class LevelCreatorScript : MonoBehaviour
     {
         [Header("References")]
-        public CD_LevelData allLevelData;
+        public CD_LevelData LevelData;
         public CD_GameColor colorData;
 
         [Header("Level Data")]
         public GameColors gameColor;
-        public int currentLevelIndex;
 
         private LevelData _currentLevelData;
         private int _rows;
         private int _columns;
-        private float _spaceModifier = 50f;
+        [SerializeField] private float _spaceModifier = 50f;
 
         private void OnEnable()
         {
-            if (allLevelData != null)
+            if (LevelData != null)
             {
                 SetCurrentLevelData();
             }
@@ -31,8 +31,8 @@ namespace Runtime.Helpers
 
         public void GenerateLevelData()
         {
-            _columns = allLevelData.levelData.Width;
-            _rows = allLevelData.levelData.Height;
+            _columns = LevelData.levelData.Width;
+            _rows = LevelData.levelData.Height;
             _currentLevelData = new LevelData
             {
                 Width = _columns,
@@ -57,7 +57,23 @@ namespace Runtime.Helpers
 
         private void SetCurrentLevelData()
         {
-            _currentLevelData = allLevelData.levelData;
+            _currentLevelData = new LevelData
+            {
+                Width = LevelData.levelData.Width,
+                Height = LevelData.levelData.Height,
+                Grids = new GridData[LevelData.levelData.Grids.Length]
+            };
+
+            for (int i = 0; i < LevelData.levelData.Grids.Length; i++)
+            {
+                _currentLevelData.Grids[i] = new GridData
+                {
+                    isOccupied = LevelData.levelData.Grids[i].isOccupied,
+                    gridColor = LevelData.levelData.Grids[i].gridColor,
+                    position = LevelData.levelData.Grids[i].position
+                };
+            }
+
             _rows = _currentLevelData.Height;
             _columns = _currentLevelData.Width;
         }
@@ -100,13 +116,29 @@ namespace Runtime.Helpers
                     return data.color;
                 }
             }
-            Debug.Log("Default color returned: Color.white");
+           
             return Color.white;
         }
 
         public void SaveLevelData()
         {
-            allLevelData.levelData = _currentLevelData;
+            if (LevelData.levelData.Grids == null || LevelData.levelData.Grids.Length != _currentLevelData.Grids.Length)
+            {
+                LevelData.levelData.Grids = new GridData[_currentLevelData.Grids.Length];
+            }
+                
+            for (int i = 0; i < _currentLevelData.Grids.Length; i++)
+            {
+                LevelData.levelData.Grids[i] = new GridData
+                {
+                    isOccupied = _currentLevelData.Grids[i].isOccupied,
+                    gridColor = _currentLevelData.Grids[i].gridColor,
+                    position = _currentLevelData.Grids[i].position
+                };
+            }
+
+            LevelData.levelData.Width = _currentLevelData.Width;
+            LevelData.levelData.Height = _currentLevelData.Height;
             Debug.Log("Level data saved.");
         }
 
@@ -122,6 +154,14 @@ namespace Runtime.Helpers
             {
                 for (int y = 0; y < _columns; y++)
                 {
+                    //ScriptableObject
+                     LevelData.levelData.SetGrid(x, y, new GridData
+                     {
+                         isOccupied = false,
+                         gridColor = Color.white,
+                         position = new Vector2Int(x, y)
+                     });
+                    //Editor
                     _currentLevelData.SetGrid(x, y, new GridData
                     {
                         isOccupied = false,
@@ -131,7 +171,6 @@ namespace Runtime.Helpers
                 }
             }
 
-            SaveLevelData(); // Ensures the ScriptableObject is also reset
             Debug.Log("Grid reset.");
         }
     }

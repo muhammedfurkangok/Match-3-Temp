@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Level 2
   m_EditorClassIdentifier: 
   levelData:
-    Width: 4
-    Height: 4
+    levelNumber: 0
+    Width: 3
+    Height: 3
     Grids:
     - isOccupied: 0
       gridColor: {r: 0, g: 0, b: 0, a: 0}
@@ -23,44 +24,23 @@ MonoBehaviour:
       gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 0, y: 1}
     - isOccupied: 0
-      gridColor: {r: 1, g: 0, b: 0, a: 0}
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 0, y: 2}
     - isOccupied: 0
       gridColor: {r: 0, g: 0, b: 0, a: 0}
-      position: {x: 0, y: 3}
-    - isOccupied: 1
-      gridColor: {r: 1, g: 0, b: 0, a: 0}
       position: {x: 1, y: 0}
     - isOccupied: 0
       gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 1, y: 1}
     - isOccupied: 0
-      gridColor: {r: 1, g: 0, b: 0, a: 0}
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 1, y: 2}
     - isOccupied: 0
       gridColor: {r: 0, g: 0, b: 0, a: 0}
-      position: {x: 1, y: 3}
-    - isOccupied: 1
-      gridColor: {r: 1, g: 0, b: 0, a: 0}
       position: {x: 2, y: 0}
     - isOccupied: 0
       gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 2, y: 1}
     - isOccupied: 0
-      gridColor: {r: 1, g: 0, b: 0, a: 0}
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 2, y: 2}
-    - isOccupied: 0
-      gridColor: {r: 0, g: 0, b: 0, a: 0}
-      position: {x: 2, y: 3}
-    - isOccupied: 0
-      gridColor: {r: 0, g: 0, b: 0, a: 0}
-      position: {x: 3, y: 0}
-    - isOccupied: 1
-      gridColor: {r: 1, g: 0, b: 0, a: 0}
-      position: {x: 3, y: 1}
-    - isOccupied: 0
-      gridColor: {r: 0, g: 0, b: 0, a: 0}
-      position: {x: 3, y: 2}
-    - isOccupied: 0
-      gridColor: {r: 0, g: 0, b: 0, a: 0}
-      position: {x: 3, y: 3}
