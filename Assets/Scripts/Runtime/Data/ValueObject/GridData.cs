@@ -1,5 +1,4 @@
 using UnityEngine;
-using Color = System.Drawing.Color;
 
 namespace Runtime.Data.ValueObject
 {
@@ -7,7 +6,7 @@ namespace Runtime.Data.ValueObject
     public struct GridData
     {
         public bool isOccupied;
-        public Color32 gridColor;
+        public Color gridColor;
         public Vector2Int position;
     }
 }

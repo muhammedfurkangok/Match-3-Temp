@@ -10,56 +10,57 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bc6e4cd06a24f9d94c7ce7cc6256139, type: 3}
-  m_Name: CD_LevelData
+  m_Name: Level 2
   m_EditorClassIdentifier: 
   levelData:
-  - Width: 4
+    Width: 4
     Height: 4
     Grids:
     - isOccupied: 0
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 0, y: 0}
     - isOccupied: 0
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 0, y: 1}
     - isOccupied: 0
+      gridColor: {r: 1, g: 0, b: 0, a: 0}
       position: {x: 0, y: 2}
     - isOccupied: 0
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 0, y: 3}
-    - isOccupied: 0
+    - isOccupied: 1
+      gridColor: {r: 1, g: 0, b: 0, a: 0}
       position: {x: 1, y: 0}
     - isOccupied: 0
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 1, y: 1}
     - isOccupied: 0
+      gridColor: {r: 1, g: 0, b: 0, a: 0}
       position: {x: 1, y: 2}
     - isOccupied: 0
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 1, y: 3}
-    - isOccupied: 0
+    - isOccupied: 1
+      gridColor: {r: 1, g: 0, b: 0, a: 0}
       position: {x: 2, y: 0}
     - isOccupied: 0
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 2, y: 1}
     - isOccupied: 0
+      gridColor: {r: 1, g: 0, b: 0, a: 0}
       position: {x: 2, y: 2}
     - isOccupied: 0
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 2, y: 3}
     - isOccupied: 0
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 3, y: 0}
-    - isOccupied: 0
+    - isOccupied: 1
+      gridColor: {r: 1, g: 0, b: 0, a: 0}
       position: {x: 3, y: 1}
     - isOccupied: 0
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 3, y: 2}
     - isOccupied: 0
+      gridColor: {r: 0, g: 0, b: 0, a: 0}
       position: {x: 3, y: 3}
-  - Width: 3
-    Height: 2
-    Grids:
-    - isOccupied: 0
-      position: {x: 0, y: 0}
-    - isOccupied: 0
-      position: {x: 0, y: 1}
-    - isOccupied: 0
-      position: {x: 0, y: 2}
-    - isOccupied: 0
-      position: {x: 1, y: 0}
-    - isOccupied: 0
-      position: {x: 1, y: 1}
-    - isOccupied: 0
-      position: {x: 1, y: 2}

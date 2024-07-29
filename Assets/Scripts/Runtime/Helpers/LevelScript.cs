@@ -2,7 +2,6 @@ using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
 using Runtime.Enums;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Runtime.Helpers
 {
@@ -11,22 +10,20 @@ namespace Runtime.Helpers
     {
         [Header("References")]
         public CD_LevelData allLevelData;
-        public CD_GameColor color;
-        
+        public CD_GameColor colorData;
+
         [Header("Level Data")]
-        public GameColors gameColor ;
+        public GameColors gameColor;
         public int currentLevelIndex;
 
         private LevelData _currentLevelData;
         private int _rows;
         private int _columns;
         private float _spaceModifier = 50f;
-        
-        private Color selectedColor => GetSelectedColor();
 
         private void OnEnable()
         {
-            if (allLevelData != null && allLevelData.levelData.Length > 0)
+            if (allLevelData != null)
             {
                 SetCurrentLevelData();
             }
@@ -34,49 +31,48 @@ namespace Runtime.Helpers
 
         public void GenerateLevelData()
         {
-            _columns = allLevelData.levelData[currentLevelIndex].Width;
-            _rows = allLevelData.levelData[currentLevelIndex].Height;
-            allLevelData.levelData[currentLevelIndex].Grids = new GridData[_rows * _columns];
-        
+            _columns = allLevelData.levelData.Width;
+            _rows = allLevelData.levelData.Height;
+            _currentLevelData = new LevelData
+            {
+                Width = _columns,
+                Height = _rows,
+                Grids = new GridData[_rows * _columns]
+            };
+
             for (int x = 0; x < _rows; x++)
             {
                 for (int y = 0; y < _columns; y++)
                 {
-                    allLevelData.levelData[currentLevelIndex].Grids[x * _columns + y] = new GridData
+                    _currentLevelData.Grids[x * _columns + y] = new GridData
                     {
                         isOccupied = false,
                         position = new Vector2Int(x, y)
                     };
                 }
             }
-        
-            SetCurrentLevelData();
+
+            Debug.Log("Grid generated.");
         }
 
         private void SetCurrentLevelData()
         {
-            _currentLevelData = allLevelData.levelData[currentLevelIndex];
+            _currentLevelData = allLevelData.levelData;
             _rows = _currentLevelData.Height;
             _columns = _currentLevelData.Width;
         }
-
-        public Vector3 GridSpaceToWorldSpace(int x, int y)
-        {
-            return new Vector3(x * _spaceModifier, 0, y * _spaceModifier);
-        }
-
-        public Vector2Int WorldSpaceToGridSpace(Vector3 worldPosition)
-        {
-            int x = Mathf.RoundToInt(worldPosition.x / _spaceModifier);
-            int y = Mathf.RoundToInt(worldPosition.z / _spaceModifier);
-            return new Vector2Int(x, y);
-        }
-
 
         public void ToggleGridOccupancy(int x, int y)
         {
             var grid = _currentLevelData.GetGrid(x, y);
             grid.isOccupied = !grid.isOccupied;
+            _currentLevelData.SetGrid(x, y, grid);
+        }
+
+        public void SetGridColor(int x, int y, Color color)
+        {
+            var grid = _currentLevelData.GetGrid(x, y);
+            grid.gridColor = color;
             _currentLevelData.SetGrid(x, y, grid);
         }
 
@@ -95,7 +91,48 @@ namespace Runtime.Helpers
             return _columns;
         }
 
-        
+        public Color GetSelectedGridColor()
+        {
+            foreach (var data in colorData.gameColorsData)
+            {
+                if (data.gameColor == gameColor)
+                {
+                    return data.color;
+                }
+            }
+            Debug.Log("Default color returned: Color.white");
+            return Color.white;
+        }
 
+        public void SaveLevelData()
+        {
+            allLevelData.levelData = _currentLevelData;
+            Debug.Log("Level data saved.");
+        }
+
+        public void LoadLevelData()
+        {
+            SetCurrentLevelData();
+            Debug.Log("Level data loaded.");
+        }
+
+        public void ResetGridData()
+        {
+            for (int x = 0; x < _rows; x++)
+            {
+                for (int y = 0; y < _columns; y++)
+                {
+                    _currentLevelData.SetGrid(x, y, new GridData
+                    {
+                        isOccupied = false,
+                        gridColor = Color.white,
+                        position = new Vector2Int(x, y)
+                    });
+                }
+            }
+
+            SaveLevelData(); // Ensures the ScriptableObject is also reset
+            Debug.Log("Grid reset.");
+        }
     }
 }
