@@ -23,14 +23,14 @@ namespace Runtime.Managers
 
         private void Init()
         {
-            if (PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) < 0 || PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) >= RemoteConfigDummy.moves.Count)
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) < 0 || PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) > RemoteConfigDummy.moves.Count)
             {
                 Debug.LogError("Invalid timer index. Using default timer value.");
                 _moveCount = RemoteConfigDummy.defaultMoveCounter;
             }
             else
             {
-                _moveCount = RemoteConfigDummy.moves[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)];
+                _moveCount = RemoteConfigDummy.moves[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) - 1];
             }
             
             UIManager.Instance.moverText.text = _moveCount.ToString();

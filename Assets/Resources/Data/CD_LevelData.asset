@@ -16,17 +16,17 @@ MonoBehaviour:
   - Width: 4
     Height: 4
     Grids:
-    - isOccupied: 1
+    - isOccupied: 0
       position: {x: 0, y: 0}
-    - isOccupied: 1
+    - isOccupied: 0
       position: {x: 0, y: 1}
-    - isOccupied: 1
+    - isOccupied: 0
       position: {x: 0, y: 2}
     - isOccupied: 0
       position: {x: 0, y: 3}
     - isOccupied: 0
       position: {x: 1, y: 0}
-    - isOccupied: 1
+    - isOccupied: 0
       position: {x: 1, y: 1}
     - isOccupied: 0
       position: {x: 1, y: 2}
@@ -34,7 +34,7 @@ MonoBehaviour:
       position: {x: 1, y: 3}
     - isOccupied: 0
       position: {x: 2, y: 0}
-    - isOccupied: 1
+    - isOccupied: 0
       position: {x: 2, y: 1}
     - isOccupied: 0
       position: {x: 2, y: 2}
@@ -48,3 +48,18 @@ MonoBehaviour:
       position: {x: 3, y: 2}
     - isOccupied: 0
       position: {x: 3, y: 3}
+  - Width: 3
+    Height: 2
+    Grids:
+    - isOccupied: 0
+      position: {x: 0, y: 0}
+    - isOccupied: 0
+      position: {x: 0, y: 1}
+    - isOccupied: 0
+      position: {x: 0, y: 2}
+    - isOccupied: 0
+      position: {x: 1, y: 0}
+    - isOccupied: 0
+      position: {x: 1, y: 1}
+    - isOccupied: 0
+      position: {x: 1, y: 2}

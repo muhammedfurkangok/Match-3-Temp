@@ -19,6 +19,22 @@ namespace Editor
             {
                 levelCreatorScript.GenerateLevelData();
             }
+            
+            EditorGUILayout.HelpBox("This is an information message.", MessageType.Info);
+            EditorGUILayout.BeginHorizontal();
+
+            
+            if (GUILayout.Button("Save Grid"))
+            {
+                // levelCreatorScript.SaveLevelData();
+            }
+            
+            if (GUILayout.Button("Load Grid"))
+            {
+                // levelCreatorScript.LoadLevelData();
+            }
+            
+            EditorGUILayout.EndHorizontal();
 
             if (levelCreatorScript.GetCurrentLevelData() != null && levelCreatorScript.GetCurrentLevelData().Grids != null)
             {
@@ -34,6 +50,7 @@ namespace Editor
             for (int x = 0; x < rows; x++)
             {
                 EditorGUILayout.BeginHorizontal();
+                
                 for (int y = 0; y < columns; y++)
                 {
                     Color originalColor = GUI.backgroundColor;
@@ -46,6 +63,7 @@ namespace Editor
 
                     GUI.backgroundColor = originalColor;
                 }
+                
                 EditorGUILayout.EndHorizontal();
             }
         }

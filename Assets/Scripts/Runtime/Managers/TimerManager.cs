@@ -30,14 +30,14 @@ namespace Runtime.Managers
         {
             _isTimerActive = true;
             
-            if (PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) < 0 || PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) >= RemoteConfigDummy.timers.Count)
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) < 0 || PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) > RemoteConfigDummy.timers.Count)
             {
                 Debug.LogError("Invalid timer index. Using default timer value.");
                 _time = RemoteConfigDummy.DefaultTimer;
             }
             else
             {
-               _time = RemoteConfigDummy.timers[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt)];
+               _time = RemoteConfigDummy.timers[PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentLevelIndexInt) - 1];
             }
             
             _originalColor = UIManager.Instance.timerText.color;
