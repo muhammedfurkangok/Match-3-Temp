@@ -1,20 +1,28 @@
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
+using Runtime.Enums;
 using UnityEngine;
-using Grid = Runtime.Data.ValueObject.Grid;
+using UnityEngine.Serialization;
 
 namespace Runtime.Helpers
 {
     [ExecuteInEditMode]
     public class LevelCreatorScript : MonoBehaviour
     {
+        [Header("References")]
         public CD_LevelData allLevelData;
+        public CD_GameColor color;
+        
+        [Header("Level Data")]
+        public GameColors gameColor ;
         public int currentLevelIndex;
 
         private LevelData _currentLevelData;
         private int _rows;
         private int _columns;
         private float _spaceModifier = 50f;
+        
+        private Color selectedColor => GetSelectedColor();
 
         private void OnEnable()
         {
@@ -28,13 +36,13 @@ namespace Runtime.Helpers
         {
             _columns = allLevelData.levelData[currentLevelIndex].Width;
             _rows = allLevelData.levelData[currentLevelIndex].Height;
-            allLevelData.levelData[currentLevelIndex].Grids = new Grid[_rows * _columns];
+            allLevelData.levelData[currentLevelIndex].Grids = new GridData[_rows * _columns];
         
             for (int x = 0; x < _rows; x++)
             {
                 for (int y = 0; y < _columns; y++)
                 {
-                    allLevelData.levelData[currentLevelIndex].Grids[x * _columns + y] = new Grid
+                    allLevelData.levelData[currentLevelIndex].Grids[x * _columns + y] = new GridData
                     {
                         isOccupied = false,
                         position = new Vector2Int(x, y)
@@ -86,6 +94,8 @@ namespace Runtime.Helpers
         {
             return _columns;
         }
+
+        
 
     }
 }

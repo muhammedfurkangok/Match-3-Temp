@@ -7,16 +7,16 @@ namespace Runtime.Data.ValueObject
     {
         public int Width;
         public int Height;
-        public Grid[] Grids;
+        public GridData[] Grids;
 
-        public Grid GetGrid(int x, int y)
+        public GridData GetGrid(int x, int y)
         {
             return Grids[x * Width + y];
         }
 
-        public void SetGrid(int x, int y, Grid grid)
+        public void SetGrid(int x, int y, GridData gridData)
         {
-            Grids[x * Width + y] = grid;
+            Grids[x * Width + y] = gridData;
         }
     }
 }
