@@ -9,6 +9,12 @@ namespace Runtime.Helpers
     [ExecuteInEditMode]
     public class LevelCreatorScript : MonoBehaviour
     {
+        [Header("Grid Settings")]
+        [Range( 50f, 100f)]
+        public float _spaceModifier = 50f;
+        [Range( 50f, 100f)]
+        public float _gridSize = 50f;
+        
         [Header("References")]
         public CD_LevelData LevelData;
         public CD_GameColor colorData;
@@ -19,7 +25,7 @@ namespace Runtime.Helpers
         private LevelData _currentLevelData;
         private int _rows;
         private int _columns;
-        [SerializeField] private float _spaceModifier = 50f;
+       
 
         private void OnEnable()
         {
@@ -53,6 +59,18 @@ namespace Runtime.Helpers
             }
 
             Debug.Log("Grid generated.");
+        }
+        
+        public Vector3 GridSpaceToWorldSpace(int x, int y)
+        {
+            return new Vector3(x * _spaceModifier, 0, y * _spaceModifier);
+        }
+
+        public Vector2Int WorldSpaceToGridSpace(Vector3 worldPosition)
+        {
+            int x = Mathf.RoundToInt(worldPosition.x / _spaceModifier);
+            int y = Mathf.RoundToInt(worldPosition.z / _spaceModifier);
+            return new Vector2Int(x, y);
         }
 
         private void SetCurrentLevelData()

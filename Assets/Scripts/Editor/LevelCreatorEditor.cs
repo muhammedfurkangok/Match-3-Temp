@@ -64,24 +64,24 @@ namespace Editor
             for (int x = 0; x < rows; x++)
             {
                 EditorGUILayout.BeginHorizontal();
-                // GUILayout.FlexibleSpace();
+                GUILayout.FlexibleSpace();
 
                 for (int y = 0; y < columns; y++)
                 {
                     Color originalColor = GUI.backgroundColor;
                     GUI.backgroundColor = levelCreatorScript.GetCurrentLevelData().GetGrid(x, y).isOccupied ? Color.green : Color.gray;
 
-                    if (GUILayout.Button($"{y}x{rows - 1 - x}", GUILayout.Width(50), GUILayout.Height(50)))
+                    if (GUILayout.Button($"{y}x{rows - 1 - x}", GUILayout.Width(levelCreatorScript._gridSize), GUILayout.Height(levelCreatorScript._gridSize)))
                     {
                         levelCreatorScript.ToggleGridOccupancy(x, y);
                         levelCreatorScript.SetGridColor(x, y, levelCreatorScript.GetSelectedGridColor());
                     }
 
                     GUI.backgroundColor = originalColor;
-                    // GUILayout.Space(5);
+                   GUILayout.Space(5);
                 }
 
-                // GUILayout.FlexibleSpace();
+                GUILayout.FlexibleSpace();
                 EditorGUILayout.EndHorizontal();
             }
         }
