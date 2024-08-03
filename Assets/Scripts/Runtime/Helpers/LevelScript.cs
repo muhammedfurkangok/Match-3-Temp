@@ -191,5 +191,11 @@ namespace Runtime.Helpers
 
             Debug.Log("Grid reset.");
         }
+
+        // public Color GetGridColor(Vector2Int position)
+        // {
+        //     // var grid = LevelData.levelData.GetGrid(position.x, position.y);
+        //     // return grid.isOccupied ? LevelData.levelData.Grids[position.x *position.y].gridColor : Color.gray;
+        // }
     }
 }
