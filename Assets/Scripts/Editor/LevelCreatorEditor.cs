@@ -61,21 +61,20 @@ namespace Editor
             int rows = levelCreatorScript.GetRows();
             int columns = levelCreatorScript.GetColumns();
 
-            for (int x = 0; x < rows; x++)
+            for (int y = rows - 1; y >= 0; y--)
             {
                 EditorGUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
 
-                for (int y = 0; y < columns; y++)
+                for (int x = 0; x < columns; x++)
                 {
+                    GUI.color = levelCreatorScript.GetGridColor(new Vector2Int(x, y));
 
-                    if (GUILayout.Button($"{y}x{rows - 1 - x}", GUILayout.Width(levelCreatorScript._gridSize), GUILayout.Height(levelCreatorScript._gridSize)))
+                    if (GUILayout.Button($"{x}x{y}", GUILayout.Width(levelCreatorScript._gridSize), GUILayout.Height(levelCreatorScript._gridSize)))
                     {
                         levelCreatorScript.ToggleGridOccupancy(x, y);
                         levelCreatorScript.SetGridColor(x, y, levelCreatorScript.GetSelectedGridColor());
-                        GUI.color = levelCreatorScript.GetGridColor(new Vector2Int(x, y));
                     }
-
                      
                     GUILayout.Space(5);
                 }

@@ -178,9 +178,7 @@ namespace Runtime.Helpers
 
         public Color GetGridColor(Vector2Int position)
        {
-           
             var grid = _currentLevelData.GetGrid(position.x, position.y);
-            Debug.Log(position + " " + grid.gridColor + " " + grid.isOccupied);
             return grid.isOccupied ? grid.gridColor : Color.gray;
         }
         public Color GetSelectedGridColor()
