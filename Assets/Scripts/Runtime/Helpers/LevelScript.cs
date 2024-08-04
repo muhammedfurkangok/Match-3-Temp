@@ -103,12 +103,7 @@ namespace Runtime.Helpers
             _currentLevelData.SetGrid(x, y, grid);
         }
 
-        public void SetGridColor(int x, int y, Color color)
-        {
-            var grid = _currentLevelData.GetGrid(x, y);
-            grid.gridColor = color;
-            _currentLevelData.SetGrid(x, y, grid);
-        }
+       
 
         public LevelData GetCurrentLevelData()
         {
@@ -125,18 +120,7 @@ namespace Runtime.Helpers
             return _columns;
         }
 
-        public Color GetSelectedGridColor()
-        {
-            foreach (var data in colorData.gameColorsData)
-            {
-                if (data.gameColor == gameColor)
-                {
-                    return data.color;
-                }
-            }
-           
-            return Color.white;
-        }
+  
 
         public void SaveLevelData()
         {
@@ -192,10 +176,31 @@ namespace Runtime.Helpers
             Debug.Log("Grid reset.");
         }
 
-        // public Color GetGridColor(Vector2Int position)
-        // {
-        //     // var grid = LevelData.levelData.GetGrid(position.x, position.y);
-        //     // return grid.isOccupied ? LevelData.levelData.Grids[position.x *position.y].gridColor : Color.gray;
-        // }
+        public Color GetGridColor(Vector2Int position)
+       {
+           
+            var grid = _currentLevelData.GetGrid(position.x, position.y);
+            Debug.Log(position + " " + grid.gridColor + " " + grid.isOccupied);
+            return grid.isOccupied ? grid.gridColor : Color.gray;
+        }
+        public Color GetSelectedGridColor()
+        {
+            foreach (var data in colorData.gameColorsData)
+            {
+                if (data.gameColor == gameColor)
+                {
+                    return data.color;
+                }
+            }
+           
+            return Color.white;
+        }
+        
+        public void SetGridColor(int x, int y, Color color)
+        {
+            var grid = _currentLevelData.GetGrid(x, y);
+            grid.gridColor = color;
+            _currentLevelData.SetGrid(x, y, grid);
+        }
     }
 }

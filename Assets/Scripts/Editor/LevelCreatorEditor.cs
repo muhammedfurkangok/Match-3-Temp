@@ -68,17 +68,16 @@ namespace Editor
 
                 for (int y = 0; y < columns; y++)
                 {
-                    Color originalColor = GUI.backgroundColor;
-                    GUI.backgroundColor = levelCreatorScript.GetCurrentLevelData().GetGrid(x, y).isOccupied ? Color.green : Color.gray;
 
                     if (GUILayout.Button($"{y}x{rows - 1 - x}", GUILayout.Width(levelCreatorScript._gridSize), GUILayout.Height(levelCreatorScript._gridSize)))
                     {
                         levelCreatorScript.ToggleGridOccupancy(x, y);
                         levelCreatorScript.SetGridColor(x, y, levelCreatorScript.GetSelectedGridColor());
+                        GUI.color = levelCreatorScript.GetGridColor(new Vector2Int(x, y));
                     }
 
-                    GUI.backgroundColor = originalColor;
-                   GUILayout.Space(5);
+                     
+                    GUILayout.Space(5);
                 }
 
                 GUILayout.FlexibleSpace();
