@@ -626,11 +626,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a671cbeefe14782a5c2801bee72e3b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Width: 2
+  Height: 2
   _spaceModifier: 50
-  _gridSize: 75.3
+  _gridSize: 75
   LevelData: {fileID: 11400000, guid: 5ab20e30570055b479a95027218fc5b5, type: 2}
   colorData: {fileID: 11400000, guid: e65212faa0de42942a7ece2cf3e7d475, type: 2}
-  gameColor: 3
+  gameColor: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

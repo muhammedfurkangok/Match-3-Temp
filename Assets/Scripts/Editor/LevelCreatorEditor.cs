@@ -22,7 +22,7 @@ namespace Editor
 
             EditorGUILayout.Space();
 
-            if (GUILayout.Button("Generate Grid"))
+            if (GUILayout.Button("Generate Level"))
             {
                 levelCreatorScript.GenerateLevelData();
             }
@@ -68,6 +68,7 @@ namespace Editor
 
                 for (int x = 0; x < columns; x++)
                 {
+                    
                     GUI.color = levelCreatorScript.GetGridColor(new Vector2Int(x, y));
 
                     if (GUILayout.Button($"{x}x{y}", GUILayout.Width(levelCreatorScript._gridSize), GUILayout.Height(levelCreatorScript._gridSize)))

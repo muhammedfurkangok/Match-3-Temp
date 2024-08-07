@@ -10,10 +10,13 @@ namespace Runtime.Helpers
     public class LevelCreatorScript : MonoBehaviour
     {
         [Header("Grid Settings")]
+        public int Width;
+        public int Height;
         [Range( 50f, 100f)]
         public float _spaceModifier = 50f;
         [Range( 50f, 100f)]
         public float _gridSize = 50f;
+        
         
         [Header("References")]
         public CD_LevelData LevelData;
@@ -21,10 +24,9 @@ namespace Runtime.Helpers
 
         [Header("Level Data")]
         public GameColors gameColor;
-
+        
         private LevelData _currentLevelData;
-        private int _rows;
-        private int _columns;
+       
        
 
         private void OnEnable()
@@ -37,20 +39,20 @@ namespace Runtime.Helpers
 
         public void GenerateLevelData()
         {
-            _columns = LevelData.levelData.Width;
-            _rows = LevelData.levelData.Height;
+            Height = LevelData.levelData.Width;
+            Width = LevelData.levelData.Height;
             _currentLevelData = new LevelData
             {
-                Width = _columns,
-                Height = _rows,
-                Grids = new GridData[_rows * _columns]
+                Width = Height,
+                Height = Width,
+                Grids = new GridData[Width * Height]
             };
 
-            for (int x = 0; x < _rows; x++)
+            for (int x = 0; x < Width; x++)
             {
-                for (int y = 0; y < _columns; y++)
+                for (int y = 0; y < Height; y++)
                 {
-                    _currentLevelData.Grids[x * _columns + y] = new GridData
+                    _currentLevelData.Grids[x * Height + y] = new GridData
                     {
                         isOccupied = false,
                         position = new Vector2Int(x, y)
@@ -75,6 +77,11 @@ namespace Runtime.Helpers
 
         private void SetCurrentLevelData()
         {
+            if (LevelData.levelData.Grids == null || LevelData.levelData.Grids.Length != _currentLevelData.Grids.Length)
+            {
+                LevelData.levelData.Grids = new GridData[_currentLevelData.Grids.Length];
+            }
+            
             _currentLevelData = new LevelData
             {
                 Width = LevelData.levelData.Width,
@@ -92,8 +99,8 @@ namespace Runtime.Helpers
                 };
             }
 
-            _rows = _currentLevelData.Height;
-            _columns = _currentLevelData.Width;
+            Width = _currentLevelData.Height;
+            Height = _currentLevelData.Width;
         }
 
         public void ToggleGridOccupancy(int x, int y)
@@ -112,12 +119,12 @@ namespace Runtime.Helpers
 
         public int GetRows()
         {
-            return _rows;
+            return Width;
         }
 
         public int GetColumns()
         {
-            return _columns;
+            return Height;
         }
 
   
@@ -152,9 +159,9 @@ namespace Runtime.Helpers
 
         public void ResetGridData()
         {
-            for (int x = 0; x < _rows; x++)
+            for (int x = 0; x < Width; x++)
             {
-                for (int y = 0; y < _columns; y++)
+                for (int y = 0; y < Height; y++)
                 {
                     //ScriptableObject
                      LevelData.levelData.SetGrid(x, y, new GridData
@@ -179,7 +186,7 @@ namespace Runtime.Helpers
         public Color GetGridColor(Vector2Int position)
        {
             var grid = _currentLevelData.GetGrid(position.x, position.y);
-            return grid.isOccupied ? grid.gridColor : Color.gray;
+            return grid.isOccupied ? grid.gridColor : Color.white;
         }
         public Color GetSelectedGridColor()
         {
