@@ -12,7 +12,7 @@ namespace Runtime.Helpers
         [Header("Grid Settings")]
         public int Width;
         public int Height;
-        [Range( 50f, 100f)]
+        [Range( 0f, 100f)]
         public float _spaceModifier = 50f;
         [Range( 50f, 100f)]
         public float _gridSize = 50f;
@@ -21,10 +21,14 @@ namespace Runtime.Helpers
         [Header("References")]
         public CD_LevelData LevelData;
         public CD_GameColor colorData;
+        public CD_GamePrefab itemPrefab;
+        public GameObject itemsParentObject; 
 
         [Header("Level Data")]
         public GameColors gameColor;
         
+       
+       
         private LevelData _currentLevelData;
        
        
@@ -39,6 +43,14 @@ namespace Runtime.Helpers
 
         public void GenerateLevelData()
         {
+            // Cleanup before generating new level
+            if (itemsParentObject != null)
+            {
+                DestroyImmediate(itemsParentObject);
+            }
+
+            itemsParentObject = new GameObject("LevelParent"); // Create new parent object
+
             Height = LevelData.levelData.Width;
             Width = LevelData.levelData.Height;
             _currentLevelData = new LevelData
@@ -52,16 +64,24 @@ namespace Runtime.Helpers
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    _currentLevelData.Grids[x * Height + y] = new GridData
+                    var gridData = new GridData
                     {
                         isOccupied = false,
                         position = new Vector2Int(x, y)
                     };
+                    _currentLevelData.Grids[x * Height + y] = gridData;
+
+                    
+                    
+                    GameObject item = Instantiate(itemPrefab.gamePrefab.prefab.gameObject, GridSpaceToWorldSpace(x, y), Quaternion.identity, itemsParentObject.transform);
+                    
+                   
                 }
             }
 
             Debug.Log("Grid generated.");
         }
+
         
         public Vector3 GridSpaceToWorldSpace(int x, int y)
         {
