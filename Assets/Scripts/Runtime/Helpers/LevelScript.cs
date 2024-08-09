@@ -74,6 +74,7 @@ namespace Runtime.Helpers
                     
                     
                     GameObject item = Instantiate(itemPrefab.gamePrefab.prefab.gameObject, GridSpaceToWorldSpace(x, y), Quaternion.identity, itemsParentObject.transform);
+                    item.GetComponent<Item>().Init(new Vector2Int(x, y), _currentLevelData.Grids[x*Height+ y].gridColor);
                     
                    
                 }
