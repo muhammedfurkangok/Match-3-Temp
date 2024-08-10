@@ -1,28 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using Runtime.Enums;
 using Runtime.Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Item : MonoBehaviour
 {
-    private Vector2Int gridPosition;
-    private Color itemColor;
-    
-    public void Init(Vector2Int position, Color color)
+    public Vector2Int GridPosition { get; private set; }
+    public Color ItemColor { get; private set; }
+
+    private GridManager _gridManager;
+
+    public void Init(Vector2Int gridPosition, Color color, GridManager gridManager)
     {
-        gridPosition = position;
-        itemColor = color;
+        GridPosition = gridPosition;
+        ItemColor = color;
+        _gridManager = gridManager;
 
-       
-        // Material material = GameMaterialManager.Instance.GetMaterialByColor(itemColor);
-        // GetComponent<Renderer>().material = material;
+        ApplyColor();
+        _gridManager.AddItem(gridPosition, this);
+        _gridManager.SetDirty();
     }
-   public void OnSelected()
-   {
-         SoundManager.Instance.PlaySound(GameSoundType.Touch);
-         MoverManager.Instance.OnInputTaken();
-   }
-}
 
+    private void ApplyColor()
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.material.color = ItemColor;
+        }
+    }
+
+    public void MoveItem(Vector2Int newPosition)
+    {
+        _gridManager.UpdateItemPosition(GridPosition, newPosition);
+        GridPosition = newPosition;
+        transform.position = _gridManager.GridSpaceToWorldSpace(newPosition);
+        _gridManager.SetDirty();
+    }
+}

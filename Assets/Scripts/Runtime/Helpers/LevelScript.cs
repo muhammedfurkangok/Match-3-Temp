@@ -1,6 +1,7 @@
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
 using Runtime.Enums;
+using Runtime.Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -74,7 +75,7 @@ namespace Runtime.Helpers
                     
                     
                     GameObject item = Instantiate(itemPrefab.gamePrefab.prefab.gameObject, GridSpaceToWorldSpace(x, y), Quaternion.identity, itemsParentObject.transform);
-                    item.GetComponent<Item>().Init(new Vector2Int(x, y), _currentLevelData.Grids[x*Height+ y].gridColor);
+                    item.GetComponent<Item>().Init(new Vector2Int(x, y), _currentLevelData.Grids[x*Height+ y].gridColor, new GridManager() /* duzelt*/);
                     
                    
                 }

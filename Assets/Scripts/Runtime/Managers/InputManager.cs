@@ -32,7 +32,7 @@ public class InputManager : MonoBehaviour
           
             if (Physics.SphereCast(ray,sphereCastRadius, out hit , Mathf.Infinity, layerMask))
             {
-                hit.transform.GetComponent<Item>().OnSelected();
+                // hit.transform.GetComponent<Item>().OnSelected();
             }
         }
     }
