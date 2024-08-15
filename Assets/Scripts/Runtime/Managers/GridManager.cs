@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Runtime.Entities;
 using UnityEngine;
 
 namespace Runtime.Managers

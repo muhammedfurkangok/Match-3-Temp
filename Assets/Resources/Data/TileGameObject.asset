@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: TileGameObject
   m_EditorClassIdentifier: 
   gamePrefab:
-    prefab: {fileID: 0}
+    prefab: {fileID: 3544145688998599726, guid: ce13e7dedc524cd41868493df9e4ed15,
+      type: 3}

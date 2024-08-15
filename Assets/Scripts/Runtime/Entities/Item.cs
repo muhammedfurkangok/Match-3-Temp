@@ -1,38 +1,41 @@
 using Runtime.Managers;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+namespace Runtime.Entities
 {
-    public Vector2Int GridPosition { get; private set; }
-    public Color ItemColor { get; private set; }
-
-    private GridManager _gridManager;
-
-    public void Init(Vector2Int gridPosition, Color color, GridManager gridManager)
+    public class Item : MonoBehaviour
     {
-        GridPosition = gridPosition;
-        ItemColor = color;
-        _gridManager = gridManager;
+        public Vector2Int GridPosition { get; private set; }
+        public Color ItemColor { get; private set; }
 
-        ApplyColor();
-        _gridManager.AddItem(gridPosition, this);
-        _gridManager.SetDirty();
-    }
+        private GridManager _gridManager;
 
-    private void ApplyColor()
-    {
-        Renderer renderer = GetComponent<Renderer>();
-        if (renderer != null)
+        public void Init(Vector2Int gridPosition, Color color,GridManager gridManager)
         {
-            renderer.material.color = ItemColor;
+            GridPosition = gridPosition;
+            ItemColor = color;
+            _gridManager = gridManager;
+                
+            // ApplyColor();
+            _gridManager.AddItem(gridPosition, this);
+            _gridManager.SetDirty();
         }
-    }
 
-    public void MoveItem(Vector2Int newPosition)
-    {
-        _gridManager.UpdateItemPosition(GridPosition, newPosition);
-        GridPosition = newPosition;
-        transform.position = _gridManager.GridSpaceToWorldSpace(newPosition);
-        _gridManager.SetDirty();
+        // private void ApplyColor()
+        // {
+        //     Renderer renderer = GetComponent<Renderer>();
+        //     if (renderer != null)
+        //     {
+        //         renderer.material.color = ItemColor;
+        //     }
+        // }
+
+        public void MoveItem(Vector2Int newPosition)
+        {
+            _gridManager.UpdateItemPosition(GridPosition, newPosition);
+            GridPosition = newPosition;
+            transform.position = _gridManager.GridSpaceToWorldSpace(newPosition);
+            _gridManager.SetDirty();
+        }
     }
 }

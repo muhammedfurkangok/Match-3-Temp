@@ -1,5 +1,6 @@
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
+using Runtime.Entities;
 using Runtime.Enums;
 using Runtime.Managers;
 using UnityEngine;
@@ -23,7 +24,8 @@ namespace Runtime.Helpers
         public CD_LevelData LevelData;
         public CD_GameColor colorData;
         public CD_GamePrefab itemPrefab;
-        public GameObject itemsParentObject; 
+        public GameObject itemsParentObject;
+        public GridManager gridManager;
 
         [Header("Level Data")]
         public GameColors gameColor;
@@ -36,6 +38,17 @@ namespace Runtime.Helpers
 
         private void OnEnable()
         {
+            if (LevelData == null)
+            {
+                Debug.LogError("LevelData is not assigned in the inspector!");
+                return;
+            }
+
+            if (LevelData.levelData == null)
+            {
+                LevelData.levelData = new LevelData();
+            }
+            
             if (LevelData != null)
             {
                 SetCurrentLevelData();
@@ -75,7 +88,7 @@ namespace Runtime.Helpers
                     
                     
                     GameObject item = Instantiate(itemPrefab.gamePrefab.prefab.gameObject, GridSpaceToWorldSpace(x, y), Quaternion.identity, itemsParentObject.transform);
-                    item.GetComponent<Item>().Init(new Vector2Int(x, y), _currentLevelData.Grids[x*Height+ y].gridColor, new GridManager() /* duzelt*/);
+                  
                     
                    
                 }
