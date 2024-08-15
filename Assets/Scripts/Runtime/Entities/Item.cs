@@ -16,7 +16,6 @@ namespace Runtime.Entities
             ItemColor = color;
             _gridManager = gridManager;
                 
-            // ApplyColor();
             _gridManager.AddItem(gridPosition, this);
             _gridManager.SetDirty();
         }

@@ -78,16 +78,18 @@ namespace Runtime.Helpers
             {
                 for (int y = 0; y < Height; y++)
                 {
+                    if(LevelData.levelData.Grids[x * Height + y].isOccupied)
+                    {
+                        GameObject item = Instantiate(itemPrefab.gamePrefab.prefab.gameObject, GridSpaceToWorldSpace(x, y), Quaternion.identity, itemsParentObject.transform);
+                    }
                     var gridData = new GridData
                     {
                         isOccupied = false,
                         position = new Vector2Int(x, y)
                     };
+                   
                     _currentLevelData.Grids[x * Height + y] = gridData;
-
                     
-                    
-                    GameObject item = Instantiate(itemPrefab.gamePrefab.prefab.gameObject, GridSpaceToWorldSpace(x, y), Quaternion.identity, itemsParentObject.transform);
                   
                     
                    
