@@ -1,7 +1,3 @@
-using System;
-using UnityEngine;
-using UnityEngine.Serialization;
-
 namespace Runtime.Data.ValueObject
 {
     [System.Serializable]
