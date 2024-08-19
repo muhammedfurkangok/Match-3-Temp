@@ -81,6 +81,7 @@ namespace Runtime.Helpers
                     if(LevelData.levelData.Grids[x * Height + y].isOccupied)
                     {
                         GameObject item = Instantiate(itemPrefab.gamePrefab.prefab.gameObject, GridSpaceToWorldSpace(x, y), Quaternion.identity, itemsParentObject.transform);
+                        item.GetComponent<Item>().Init(new Vector2Int(x, y), LevelData.levelData.Grids[x * Height + y].gridColor, gridManager);
                     }
                     var gridData = new GridData
                     {
@@ -95,7 +96,7 @@ namespace Runtime.Helpers
                    
                 }
             }
-
+            LoadLevelData();
             Debug.Log("Grid generated.");
         }
 

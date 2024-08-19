@@ -10,11 +10,11 @@ namespace Runtime.Managers
         public int Height { get; private set; }
         public float SpaceModifier { get; private set; }
 
-        private Dictionary<Vector2Int, Item> _itemDictionary;
+        private List<Item> _itemList;
 
         private void Awake()
         {
-            _itemDictionary = new Dictionary<Vector2Int, Item>();
+            _itemList = new List<Item>();
         }
 
         public void Initialize(int width, int height, float spaceModifier)
@@ -24,36 +24,31 @@ namespace Runtime.Managers
             SpaceModifier = spaceModifier;
         }
 
-        public void AddItem(Vector2Int position, Item item)
+        public void AddItem(Item item)
         {
-            if (!_itemDictionary.ContainsKey(position))
+            if (!_itemList.Contains(item))
             {
-                _itemDictionary[position] = item;
+                _itemList.Add(item);
             }
         }
 
-        public void RemoveItem(Vector2Int position)
+        public void RemoveItem(Item item)
         {
-            if (_itemDictionary.ContainsKey(position))
+            if (_itemList.Contains(item))
             {
-                _itemDictionary.Remove(position);
+                _itemList.Remove(item);
             }
         }
 
-        public void UpdateItemPosition(Vector2Int oldPosition, Vector2Int newPosition)
+        public void UpdateItemPosition(Item item, Vector2Int newPosition)
         {
-            if (_itemDictionary.ContainsKey(oldPosition))
-            {
-                Item item = _itemDictionary[oldPosition];
-                _itemDictionary.Remove(oldPosition);
-                _itemDictionary[newPosition] = item;
-            }
+            // Eğer pozisyon bilgisi item'da varsa, buradan pozisyonu güncelleyebilirsin
+            // Örneğin: item.SetPosition(newPosition);
         }
 
-        public Item GetItem(Vector2Int position)
+        public List<Item> GetItems()
         {
-            _itemDictionary.TryGetValue(position, out Item item);
-            return item;
+            return _itemList;
         }
 
         public Vector3 GridSpaceToWorldSpace(Vector2Int gridPosition)
@@ -70,9 +65,9 @@ namespace Runtime.Managers
 
         public void SetDirty()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             UnityEditor.EditorUtility.SetDirty(this);
-            #endif
+#endif
         }
     }
 }

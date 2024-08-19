@@ -29,6 +29,7 @@ namespace Editor
 
             EditorGUILayout.LabelField("Save/Load/Reset Grid", titleStyle);
 
+            EditorGUILayout.HelpBox("Don't Forget Save", MessageType.Warning);
             EditorGUILayout.BeginHorizontal();
 
             if (GUILayout.Button("Save Grid"))
