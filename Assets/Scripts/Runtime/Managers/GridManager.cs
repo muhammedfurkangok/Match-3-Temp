@@ -26,10 +26,7 @@ namespace Runtime.Managers
 
         public void AddItem(Item item)
         {
-            if (!_itemList.Contains(item))
-            {
                 _itemList.Add(item);
-            }
         }
 
         public void RemoveItem(Item item)
