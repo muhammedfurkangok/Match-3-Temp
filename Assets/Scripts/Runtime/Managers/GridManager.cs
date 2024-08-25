@@ -10,7 +10,7 @@ namespace Runtime.Managers
         public int Height { get; private set; }
         public float SpaceModifier { get; private set; }
 
-        private List<Item> _itemList;
+        public List<Item> _itemList;
 
         private void Awake()
         {
@@ -29,14 +29,6 @@ namespace Runtime.Managers
                 _itemList.Add(item);
         }
 
-        public void RemoveItem(Item item)
-        {
-            if (_itemList.Contains(item))
-            {
-                _itemList.Remove(item);
-            }
-        }
-
         public void UpdateItemPosition(Item item, Vector2Int newPosition)
         {
             // Eğer pozisyon bilgisi item'da varsa, buradan pozisyonu güncelleyebilirsin
@@ -46,6 +38,17 @@ namespace Runtime.Managers
         public List<Item> GetItems()
         {
             return _itemList;
+        }
+        public void RemoveItem(Item item)
+        {
+            if (_itemList.Contains(item))
+            {
+                _itemList.Remove(item);
+            }
+        }
+        public void ClearItems()
+        {
+            _itemList.Clear();
         }
 
         public Vector3 GridSpaceToWorldSpace(Vector2Int gridPosition)
@@ -66,5 +69,7 @@ namespace Runtime.Managers
             UnityEditor.EditorUtility.SetDirty(this);
 #endif
         }
+
+       
     }
 }

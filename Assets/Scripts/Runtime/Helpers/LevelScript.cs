@@ -61,6 +61,7 @@ namespace Runtime.Helpers
             if (itemsParentObject != null)
             {
                 DestroyImmediate(itemsParentObject);
+                gridManager.ClearItems();
             }
 
             itemsParentObject = new GameObject("LevelParent"); // Create new parent object

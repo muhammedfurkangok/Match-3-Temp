@@ -1,3 +1,5 @@
+using Runtime.Data.UnityObject;
+using Runtime.Data.ValueObject;
 using Runtime.Managers;
 using UnityEngine;
 
@@ -7,6 +9,8 @@ namespace Runtime.Entities
     {
         public Vector2Int GridPosition { get; private set; }
         public Color ItemColor { get; private set; }
+        
+        public CD_ItemParameters itemParametersData;
 
         
 
@@ -17,16 +21,17 @@ namespace Runtime.Entities
                 
             gridManager.AddItem(this);
             gridManager.SetDirty();
+            // ApplyColor();
         }
 
-        // private void ApplyColor()
-        // {
-        //     Renderer renderer = GetComponent<Renderer>();
-        //     if (renderer != null)
-        //     {
-        //         renderer.material.color = ItemColor;
-        //     }
-        // }
+        private void ApplyColor()
+        {
+            Renderer renderer = GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material.color = ItemColor;
+            }
+        }
 
        
     }
