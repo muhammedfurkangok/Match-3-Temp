@@ -1,6 +1,6 @@
 namespace Runtime.Enums
 {
-    public enum GameColors 
+    public enum GameColor 
     {
         None, 
         Blue, 

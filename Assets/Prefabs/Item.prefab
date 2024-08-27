@@ -146,4 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fb9b2347daded41804019612816aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GridPosition: {x: 0, y: 0}
+  itemColor: 0
   itemParametersData: {fileID: 11400000, guid: a441d8f33e9429e46ba1627359b69b3e, type: 2}
+  Renderer: {fileID: 1961315698940630091}
+  colorData: {fileID: 11400000, guid: e65212faa0de42942a7ece2cf3e7d475, type: 2}

@@ -27,8 +27,7 @@ namespace Runtime.Helpers
         public GameObject itemsParentObject;
         public GridManager gridManager;
 
-        [Header("Level Data")]
-        public GameColors gameColor;
+        public GameColor gameColor;
         
        
        
@@ -79,10 +78,10 @@ namespace Runtime.Helpers
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    if(LevelData.levelData.Grids[x * Height + y].isOccupied)
+                    if(LevelData.levelData.GetGrid(x,y).isOccupied && LevelData.levelData.GetGrid(x,y).gameColor != GameColor.None)
                     {
                         GameObject item = Instantiate(itemPrefab.gamePrefab.prefab.gameObject, GridSpaceToWorldSpace(x, y), Quaternion.identity, itemsParentObject.transform);
-                        item.GetComponent<Item>().Init(new Vector2Int(x, y), LevelData.levelData.Grids[x * Height + y].gridColor, gridManager);
+                        item.GetComponent<Item>().Init(new Vector2Int(x, y), LevelData.levelData.GetGrid(x,y).gameColor, gridManager);
                     }
                     var gridData = new GridData
                     {
@@ -133,7 +132,7 @@ namespace Runtime.Helpers
                 _currentLevelData.Grids[i] = new GridData
                 {
                     isOccupied = LevelData.levelData.Grids[i].isOccupied,
-                    gridColor = LevelData.levelData.Grids[i].gridColor,
+                    gameColor = LevelData.levelData.Grids[i].gameColor,
                     position = LevelData.levelData.Grids[i].position
                 };
             }
@@ -180,7 +179,7 @@ namespace Runtime.Helpers
                 LevelData.levelData.Grids[i] = new GridData
                 {
                     isOccupied = _currentLevelData.Grids[i].isOccupied,
-                    gridColor = _currentLevelData.Grids[i].gridColor,
+                    gameColor = _currentLevelData.Grids[i].gameColor,
                     position = _currentLevelData.Grids[i].position
                 };
             }
@@ -206,14 +205,14 @@ namespace Runtime.Helpers
                      LevelData.levelData.SetGrid(x, y, new GridData
                      {
                          isOccupied = false,
-                         gridColor = Color.white,
+                         gameColor = GameColor.None,
                          position = new Vector2Int(x, y)
                      });
                     //Editor
                     _currentLevelData.SetGrid(x, y, new GridData
                     {
                         isOccupied = false,
-                        gridColor = Color.white,
+                         gameColor = GameColor.None,
                         position = new Vector2Int(x, y)
                     });
                 }
@@ -225,7 +224,7 @@ namespace Runtime.Helpers
         public Color GetGridColor(Vector2Int position)
        {
             var grid = _currentLevelData.GetGrid(position.x, position.y);
-            return grid.isOccupied ? grid.gridColor : Color.white;
+            return grid.isOccupied ? colorData.gameColorsData[(int)grid.gameColor].color : Color.white;
         }
         public Color GetSelectedGridColor()
         {
@@ -240,10 +239,10 @@ namespace Runtime.Helpers
             return Color.white;
         }
         
-        public void SetGridColor(int x, int y, Color color)
+        public void SetGridColor(int x, int y)
         {
             var grid = _currentLevelData.GetGrid(x, y);
-            grid.gridColor = color;
+            grid.gameColor = gameColor;
             _currentLevelData.SetGrid(x, y, grid);
         }
     }
