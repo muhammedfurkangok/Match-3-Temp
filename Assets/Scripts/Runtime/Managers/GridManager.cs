@@ -6,9 +6,9 @@ namespace Runtime.Managers
 {
     public class GridManager : MonoBehaviour
     {
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-        public float SpaceModifier { get; private set; }
+        public int Width;
+        public int Height;
+        public float SpaceModifier;
 
         public List<Item> _itemList;
 
@@ -26,7 +26,7 @@ namespace Runtime.Managers
 
         public void AddItem(Item item)
         {
-                _itemList.Add(item);
+            _itemList.Add(item);
         }
 
         public void UpdateItemPosition(Item item, Vector2Int newPosition)

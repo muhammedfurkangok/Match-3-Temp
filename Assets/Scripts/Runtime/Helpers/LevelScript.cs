@@ -56,23 +56,17 @@ namespace Runtime.Helpers
 
         public void GenerateLevelData()
         {
+            gridManager.Initialize(Width, Height, _spaceModifier);
+            
             // Cleanup before generating new level
             if (itemsParentObject != null)
             {
                 DestroyImmediate(itemsParentObject);
                 gridManager.ClearItems();
             }
-
+            
             itemsParentObject = new GameObject("LevelParent"); // Create new parent object
 
-            Height = LevelData.levelData.Width;
-            Width = LevelData.levelData.Height;
-            _currentLevelData = new LevelData
-            {
-                Width = Height,
-                Height = Width,
-                Grids = new GridData[Width * Height]
-            };
 
             for (int x = 0; x < Width; x++)
             {
@@ -83,20 +77,8 @@ namespace Runtime.Helpers
                         GameObject item = Instantiate(itemPrefab.gamePrefab.prefab.gameObject, GridSpaceToWorldSpace(x, y), Quaternion.identity, itemsParentObject.transform);
                         item.GetComponent<Item>().Init(new Vector2Int(x, y), LevelData.levelData.GetGrid(x,y).gameColor, gridManager);
                     }
-                    var gridData = new GridData
-                    {
-                        isOccupied = false,
-                        position = new Vector2Int(x, y)
-                    };
-                   
-                    _currentLevelData.Grids[x * Height + y] = gridData;
-                    
-                  
-                    
-                   
                 }
             }
-            LoadLevelData();
             Debug.Log("Grid generated.");
         }
 
