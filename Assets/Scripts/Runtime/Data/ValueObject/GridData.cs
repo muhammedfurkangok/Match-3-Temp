@@ -9,7 +9,6 @@ namespace Runtime.Data.ValueObject
     {
         public bool isOccupied;
         public GameColor gameColor;
-        
         public Vector2Int position;
     }
 }
